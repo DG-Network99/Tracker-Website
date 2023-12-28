@@ -13,7 +13,6 @@ __pycache__/
 
 # venv
 .env
-env
 
 # README
 README.md
