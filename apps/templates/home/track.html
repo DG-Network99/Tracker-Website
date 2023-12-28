@@ -1,0 +1,42 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Page content -->
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="font-weight-bold">Yey!! Your Product is added for tracking. View your <a
+                    href="/products">Products</a></p>
+            <hr>
+            <div class="text-center pb-3">
+                <h5>Go to <a href="/" class="text-primary-color">Home Page</a></h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "includes/footer.html" %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

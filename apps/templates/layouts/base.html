@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-argon">
+
+  <title>
+    Price Tracker - {% block title %} Analyze Before You Buy {% endblock %} | iQStack
+  </title>
+
+  <!-- Favicon - loaded as static -->
+  <link rel="icon" href="/static/assets/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="/static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="/static/assets/css/argon.css?v=1.2.0" type="text/css">
+
+  <!-- Specific CSS goes HERE -->
+  {% block stylesheets %}
+  {% endblock stylesheets %}
+
+  <style>
+    /* Main style starts */
+
+    :root {
+      --primary-color: rgb(45, 196, 207);
+    }
+
+    .text-primary-color {
+      color: var(--primary-color);
+    }
+
+    .bg-primary-color {
+      background-color: var(--primary-color);
+    }
+
+    /* Custom Primary Button */
+
+    .btn-primary-color {
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:active {
+      background-color: rgb(75, 216, 226);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:hover {
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:not(:disabled):not(.disabled):active,
+    .btn-primary-color:not(:disabled):not(.disabled).active,
+    .show>.btn-primary-color.dropdown-toggle {
+      color: #fff;
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    /* Customize argon avatar */
+    .avatar {
+      background-color: white;
+      object-fit: contain;
+    }
+
+    /* Main style ends */
+
+    .star-ratings {
+      display: inline-block;
+      font-size: 24px;
+    }
+
+    .star {
+      color: #C0C0C0;
+      /* Silver color for empty star */
+    }
+
+    .star[data-rating] {
+      color: #FFD700;
+      /* Golden yellow color for filled star */
+    }
+
+    .hidden1 {
+      display: none;
+    }
+
+    #loading1 {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, .3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      -webkit-animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    .primary-color {
+      color: red;
+    }
+  </style>
+
+</head>
+
+<body class="bg-white" id="html-body">
+
+  {% include "includes/sidenav.html" %}
+
+  <div class="main-content" id="panel">
+
+    {% include "includes/navigation.html" %}
+
+    {% block content %}{% endblock content %}
+
+  </div>
+
+  {% include "includes/scripts.html" %}
+
+  <!-- Specific JS goes HERE -->
+  {% block javascripts %}{% endblock javascripts %}
+
+  <script src="/static/assets/js/argon.js?v=1.2.0"></script>
+
+</body>
+
+</html>

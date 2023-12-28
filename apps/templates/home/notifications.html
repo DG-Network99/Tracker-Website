@@ -1,0 +1,75 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Notifications {% endblock title %}
+
+{% block content %}
+
+<div class="header bg-secondary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-primary-color d-inline-block mb-0">Notifications</h6>
+          <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Notifications</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+            </ol>
+          </nav> -->
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Show More</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6 bg-secondary">
+  <div class="list-group list-group-flush mb-3">
+    {% for prod in notifications %}
+    <a href="/product?pid={{prod.product_id}}&nid={{prod.notification_id}}"
+      class="list-group-item list-group-item-action">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <!-- Avatar -->
+          <img alt="Image placeholder" src="https://m.media-amazon.com/images/I/71hIfcIPyxS._SX522_.jpg" class="avatar">
+        </div>
+        <div class="col ml--2">
+          <div class="d-flex justify-content-between align-items-center" style="height: 100%;">
+            <div style="width: 50vw;">
+              <h4 class="mb-0 text-sm {% if prod.is_read == 'True' %}text-muted{% else %}text-dark{% endif %}"
+                style="font-size: 0.74rem !important;">
+                {{prod.product_detail.title|truncatechars:60}}</h4>
+            </div>
+            <div class="text-right text-muted">
+              <small class="align-self-start" style="font-size: 0.65rem !important;">2 hrs ago</small>
+            </div>
+          </div>
+          <p class="text-sm mb-0">
+
+            <!-- <i class="fa fa-arrow-up"></i> -->
+            <!-- <span class="badge badge-dot mr-4">
+                          <i class="fa {% if prod.change == 'increased' %}bg-warning{% else %}bg-success{% endif %}"></i>
+                            <span class="status">Price has been {{prod.change}} by {{prod.percentage}}%</span>
+                          </span> -->
+
+            <i
+              class="{% if prod.change == 'increased' %}text-warning fa fa-arrow-up{% else %}text-success fa fa-arrow-down{% endif %}"></i>
+            <span class="status">Price has been {{prod.change}} by {{prod.percentage}}%</span>
+
+          </p>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+
+  </div>
+  {% include "includes/footer.html" %}
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

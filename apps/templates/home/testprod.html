@@ -1,0 +1,145 @@
+<!-- ########################## -->
+
+
+{% for product in data %}
+<div class="col-xl-4 col-md-6">
+    <div class="card card-stats">
+        <div class="card-body">
+            <div class="row">
+                <div class="col text-left text-muted">
+                    {% if product.merchant == "amazon" %}
+                    <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                        style="width: auto; height: 16px;" alt="amazon-icon">
+                    {% elif product.merchant == "flipkart" %}
+                    <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                        style="width: auto; height: 18px;" alt="flipkart-icon">
+                    {% else %}
+                    <img class="align-self-start"
+                        src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png"
+                        style="width: auto; height: 18px;" alt="merchant-icon">
+                    {% endif %}
+                </div>
+                <div class="col text-right text-muted">
+                    <!-- <small><i class="ni ni-curved-next"></i></small> -->
+                    <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col">
+                    <a href="{{product.url}}" id="product-url">
+                        <h5 class="card-title font-weight-bold text-dark mb-0">{{product.title}}</h5>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-xl-4 col-4 border">
+                    <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+                        {% if product.image %}
+                        <img class="rounded align-items-center"
+                            style="height: auto; max-height: 6.85rem; width: 100%; object-fit: contain;"
+                            src="{{product.image}}" alt="prod-img">
+                        {% else %}
+                        {% if product.merchant == "flipkart" %}
+                        <img class="rounded align-items-center" style="height: auto; width: 100%; object-fit: contain;"
+                            alt="prod-img" src="/static/assets/img/theme/flipkart2-icon.png">
+                        {% elif product.merchant == "amazon" %}
+                        <img class="rounded align-items-center" style="height: auto; width: 100%; object-fit: contain;"
+                            alt="prod-img" src="/static/assets/img/theme/amazon2-icon.png">
+                        {% else %}
+                        <img class="rounded align-items-center" style="height: auto; width: 100%; object-fit: contain;"
+                            alt="prod-img"
+                            src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-xl-8 col-8 border">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-1 px-0">
+                            <div class="row no-gutters">
+                                <div class="col-7 pr-0">
+                                    <div
+                                        class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                        Current Price
+                                    </div>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <div class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                        {% if product.price != '' %} {{product.price}} {% else %} - {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item py-1 px-0">
+                            <div class="row no-gutters">
+                                <div class="col-7 pr-0">
+                                    <div
+                                        class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                        Previous Price
+                                    </div>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <div class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                        {% if product.initPrice != '' %} {{product.initPrice}} {% else %} - {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item py-2 text-center">
+                            <a href="/product/{{product.product_id}}"
+                                class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                History >></a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col text-left">
+                    <div class="d-flex flex-column">
+                        <span class="badge badge-dot d-block">
+                            {% if product.price != '' %}
+                            <i class="bg-success"></i>
+                            <small class="status font-weight-bold custom-date-text text-dark">In Stock</small>
+                            {% else %}
+                            <i class="bg-danger"></i>
+                            <small class="status font-weight-bold custom-date-text text-dark">Out of Stock</small>
+                            {% endif %}
+                        </span>
+
+                        {% if product.price != '' %}
+                        <a href="{{product.url}}" class="btn btn-success custom-btn"
+                            style="background: green; border-color: rgb(1, 108, 1);">Buy
+                            Now</a>
+                        {% else %}
+                        <a href="{{product.url}}" class="btn btn-success custom-btn"
+                            style="background: rgb(100, 100, 100); border-color: rgb(100, 100, 100)">Check
+                            Now</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col text-right">
+                    <div class="d-flex flex-column">
+                        <span class="badge badge-dot d-block">
+                            <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs ago</small>
+                        </span>
+                        <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style=" background: rgb(46, 87, 211); border-color: royalblue;">Stop Tracking</a> -->
+                        <a href="/product/{{product.product_id}}" class="btn btn-info custom-btn">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<!-- ########################## -->

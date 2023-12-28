@@ -1,0 +1,100 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Product Info</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#">Product Info</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Product Info</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+            <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+            <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      {% if product %}
+      <div class="col-xl-12 col-md-6">
+        <div class="card card-stats">    
+
+          <!-- <img src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" class="card-img-top img-fluid" alt="..."> -->
+          <!-- <div class="embed-responsive embed-responsive-16by9">
+            <img alt="Card image cap" class="card-img-top embed-responsive-item" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" />
+         </div> -->
+          <!-- Card body -->
+          <div class="card-body">
+            <!-- <div class="row">
+              
+              <div class="col">    
+                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>                       
+              </div>
+
+              <div class="col-auto">               
+                <div>
+                  <a href="/product/{{product.tracking_id}}" class="btn btn-sm btn-primary">See more</a>
+                </div>
+                
+                  <a href="#" class="avatar mr-3">
+                  <img alt="Image placeholder" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg">
+                  </a>
+                
+              </div>
+    
+            </div> -->
+            <div class="row">            
+              <div class="col">
+                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>
+              </div>
+              <div class="col-auto">               
+                <div>
+                  <a href="/product?pid={{product.tracking_id}}" class="btn btn-sm btn-primary">See more</a>
+                </div>
+              </div>
+            </div>
+            
+            <span class="h4 text-success font-weight-bold mb-0">Current Price: {{product.price}}</span><br>
+            <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: {{product.initPrice}}</span>
+            <p class="mt-3 mb-0 text-sm">
+            <span class="text-primary mr-2">Last tracked :
+            <span class="text-nowrap text-success">a day ago</span><br></span>
+            </p>
+              
+            <div class="row">
+              <div class="col text-left">
+                <a href="{{product.url}}" class="btn btn-success">Buy Now</a>
+              </div>
+              <div class="col text-right">
+                <a href="https://t.me/HR_ID_2_Bot" class="btn btn-danger">Stop Tracking</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>  
+
+    {% include "includes/footer.html" %}
+
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
