@@ -6,6 +6,12 @@ Copyright (c) 2019 - present AppSeed.us
 import os
 from decouple import config
 from unipath import Path
+from dotenv import load_dotenv
+
+load_dotenv()  # This line brings all environment variables from .env into os.environ
+SERVER_URL = os.environ['SERVER_URL']
+TEMP_SITE = os.environ['TEMP_SITE']
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).parent
@@ -18,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '195.35.20.195', config('SERVER', default='127.0.0.1')]
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 
 #                  'fascinating-olive-offering-sprint.trycloudflare.com', 
@@ -27,11 +33,9 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')
 # CSRF_TRUSTED_ORIGINS = ['https://fascinating-olive-offering-sprint.trycloudflare.com']
 
 
-temp_website = "https://fascinating-olive-offering-sprint.trycloudflare.com"
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', SERVER_URL , TEMP_SITE.split("//")[1], TEMP_SITE, config('SERVER', default='127.0.0.1')]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', temp_website.split("//")[1], temp_website]
-
-CSRF_TRUSTED_ORIGINS = [temp_website]
+CSRF_TRUSTED_ORIGINS = [SERVER_URL, TEMP_SITE]
 
 
 
