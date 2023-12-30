@@ -20,7 +20,7 @@
 
       <div class="row mt-1">
         <div class="col">
-          <a href="{{data.link}}" target="_blank">
+          <a href="{{data.link}}" target="_blank" id="product-url">
             <h5 class="card-title font-weight-bold mb-0">{{data.title}}</h5>
           </a>
         </div>
@@ -55,14 +55,14 @@
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small pl-0 pr-0">Rating</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">4.55(2000)</div>
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">4.55 (2000)</div>
               </div>
             </li>
 
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small">Brand</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">Amazon Basis Basis</div>
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">Amazon Basics</div>
               </div>
             </li>
           </ul>
@@ -118,9 +118,12 @@
             <span class="badge badge-dot d-block">
               <small class="font-weight-bold text-muted custom-date-text">Last updated : 2 days ago</small>
             </span>
-            <a href="/track" class="btn btn-primary custom-btn" style="
+            <!-- <a href="/track" class="btn btn-primary custom-btn" style="
                             background: rgb(46, 87, 211);
-                            border-color: royalblue;">Track Now</a>
+                            border-color: royalblue;">Track Now</a> -->
+            <button id="submit-button" onclick="trackProduct()" class="btn btn-primary text-white custom-btn" style="
+                            background: rgb(46, 87, 211);
+                            border-color: royalblue;">Track Now</button>
           </div>
 
         </div>

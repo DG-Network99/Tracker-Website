@@ -125,7 +125,15 @@ def pages(request):
             return render(request, 'home/telegram.html')
         
         if load_template == 'track':
-            return render(request, 'home/track.html')
+            if request.method == "POST":
+                print("Product URL is ",request.POST['productUrl'])
+                return render(request, 'home/track.html')
+            elif request.method == "GET":
+                return render(request, 'home/track.html')
+            else:
+                response = JsonResponse({"error": "there was an error"})
+                response.status_code = 404
+                return response
                
         page = 'home/' + load_template+".html"
         return render(request, page, {"form": "hi"})
