@@ -21,8 +21,8 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
-
+# DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.environ['DEBUG']
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '195.35.20.195', config('SERVER', default='127.0.0.1')]
 
@@ -141,6 +141,10 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
+# set to true if you want email notification in console
+SET_LOCAL_EMAIL_BACKEND = os.environ['SET_LOCAL_EMAIL_BACKEND']
+if SET_LOCAL_EMAIL_BACKEND:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #############################################################
 #############################################################

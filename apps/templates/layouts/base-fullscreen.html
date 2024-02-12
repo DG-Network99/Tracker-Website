@@ -22,7 +22,56 @@
 
   <!-- Specific CSS goes HERE -->
 
-  {% block stylesheets %}{% endblock stylesheets %}
+  {% block stylesheets %}
+
+  {% endblock stylesheets %}
+
+  <style>
+    /* Main style starts */
+
+    :root {
+      --primary-color: rgb(45, 196, 207);
+    }
+
+    .text-primary-color {
+      color: var(--primary-color);
+    }
+
+    .bg-primary-color {
+      background-color: var(--primary-color);
+    }
+
+    /* Custom Primary Button */
+
+    .btn-primary-color {
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:active {
+      background-color: rgb(75, 216, 226);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:hover {
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    .btn-primary-color:not(:disabled):not(.disabled):active,
+    .btn-primary-color:not(:disabled):not(.disabled).active,
+    .show>.btn-primary-color.dropdown-toggle {
+      color: #fff;
+      background-color: var(--primary-color);
+      border-color: rgb(42, 186, 197);
+    }
+
+    /* Customize argon avatar */
+    .avatar {
+      background-color: white;
+      object-fit: contain;
+    }
+  </style>
 
 </head>
 
@@ -33,14 +82,13 @@
     {% include "includes/navigation-fullscreen.html" %}
 
     <!-- Header -->
-    <div class="header bg-gradient-primary py-7 py-lg-8">
+    <div class="header py-7 py-lg-6">
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">
-                <a target="_blank" class="text-white"
-                  href="https://appseed.us/admin-dashboards/django-dashboard-argon">Price Tracker</a>
+                <a target="_blank" class="text-white" href="/">Price Tracker</a>
               </h1>
               <p class="text-lead text-light">
                 Just Making Your Purchase Easy -

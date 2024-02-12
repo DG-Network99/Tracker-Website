@@ -7,7 +7,9 @@ Copyright (c) 2019 - present AppSeed.us
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
+import asyncio
 
+from ..home.mongo_db import get_products, get_product_info, get_all_notifications, manage_users
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -24,9 +26,9 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                msg = 'Sorry, Email or password is incorrect'
         else:
-            msg = 'Error validating the form'
+            msg = 'Something went wrong. Please try again.'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
 
@@ -39,9 +41,12 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("username")
+            username = form.cleaned_data.get("email")
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
+
+            asyncio.run(manage_users({"user_email": username, 
+                              "products": []},"create_user"))
 
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
@@ -49,7 +54,7 @@ def register_user(request):
             # return redirect("/login/")
 
         else:
-            msg = 'Form is not valid'
+            msg = 'Please provide valid credentials'
     else:
         form = SignUpForm()
 

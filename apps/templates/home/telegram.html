@@ -47,7 +47,8 @@
     <div class="row equal-height-row">
         <div class="col-xl-4 order-xl-2 equal-height-col">
             <div class="card card-profile">
-                <img src="/static/assets/img/theme/telegram-banner.jpg" alt="Image placeholder" class="card-img-top" style="height: fit-content;width: 100%;">
+                <img src="/static/assets/img/theme/telegram-banner.jpg" alt="Image placeholder" class="card-img-top"
+                    style="height: fit-content;width: 100%;">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
@@ -59,8 +60,10 @@
                 </div>
                 <div class="card-header text-center border-0 pt-4 pt-md-4 pb-0 pb-md-4">
                     <div class="d-flex justify-content-between">
-                        <a href="#" class="btn btn-sm btn-info  mr-4 ">Connect</a>
-                        <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                        <a href="https://telegram.me/Amazon_Flipkart_Price_Alert_Bot"
+                            class="btn btn-sm btn-info  mr-4 ">Connect</a>
+                        <a href="https://telegram.me/Amazon_Flipkart_Price_Alert_Bot"
+                            class="btn btn-sm btn-default float-right">Message</a>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -124,26 +127,26 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <label class="form-control-label" for="input-telegram-id">Enter your
-                                                        Telegram
-                                                        ID</label>
+                                                    <label class="form-control-label" for="input-telegram-id">
+                                                        Enter yourTelegramID
+                                                    </label>
                                                     <input type="number" id="input-telegram-id" class="form-control"
                                                         placeholder="TelegramID" value="98568214">
                                                 </div>
                                             </div>
-                                            <button type="submit" href="#!"
+                                            <button type="submit" id="connect-tg-btn"
                                                 class="btn btn-md bg-success text-white mt-2">Connect</button>
+                                            <div id="info-container"></div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </form>
-                    <h6 class="heading-small text-muted mb-4 d-inline">Note : You can Get your telegram id from our bot
-                        by
-                        clicking here</h6>
+                    <h6 class="heading-small text-muted mb-4 d-inline">
+                        Note : You can Get your telegram id from our bot by clicking here
+                    </h6>
                     <a href="#!" class="btn btn-sm btn-info ml-2">Get Telegram ID</a>
                 </div>
             </div>
@@ -157,4 +160,18 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script>
+    document.getElementById('connect-tg-btn').addEventListener('click', function (event) {
+
+        event.preventDefault();
+
+        infoContainer = document.getElementById("info-container");
+
+        infoContainer.innerHTML = '<div class="alert alert-warning mt-2" role="alert">Conecting Telegram feature will be enabled soon!</div>';
+
+    });
+</script>
+
+{% endblock javascripts %}

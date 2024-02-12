@@ -9,6 +9,10 @@
   .input-group-alternative {
     border: 1px solid rgb(200, 245, 248);
   }
+
+  button[disabled] {
+    cursor: not-allowed;
+  }
 </style>
 
 {% endblock stylesheets %}
@@ -23,123 +27,49 @@
         <div class="col-lg-6 col-7">
           <h6 class="h2 d-inline-block mb-0 text-dar text-primary-color" style="font-weight: 700;">Price Tracker
           </h6>
-          <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-              <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Default</li>
-            </ol>
-          </nav> -->
         </div>
         <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral text-primary-color">My
+          <a href="/products" class="btn btn-sm btn-neutral text-primary-color">My
             Products</a>
-          <!-- <a href="#" class="btn btn-sm btn-neutral">New Deals</a> -->
         </div>
       </div>
       <!-- Card stats -->
       <div class="row">
         <!-- Search Form Starts -->
-        <div class="col-xl-9 col-md-6 align-items-center mx-auto">
+        <div class="col-xl-9 col-md-8 align-items-center mx-auto">
           <!-- <form class=" navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main"> -->
-          <div id="navbar-search-main" method="POST">
-            {% csrf_token %}
-            <div class="form-group mb-3">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+          <form id="searchForm" action="/" method="post">
+            <div id="navbar-search-main" method="POST">
+              {% csrf_token %}
+              <div class="form-group mb-3">
+                <div class="input-group input-group-alternative input-group-merge">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                  <input id="input-field" class="form-control" name="search" placeholder="Paste the product url"
+                    type="text" required>
                 </div>
-                <input id="input-field" class="form-control" name="search" placeholder="Paste the product url"
-                  type="text">
-              </div>
-              <div id="button-placeholder" class="text-center">
+                <div id="button-placeholder" class="text-center">
 
-                <button id="submit-button" onclick="submitForm()"
-                  class="btn btn-primary mt-4 text-white btn-primary-color">
-                  <!-- <i class="fa fa-spinner fa-spin fa-3x fa-fw text-sm" id="loading-spinner" style="display: none;"></i> -->
+                  <!-- <button id="submit-button" onclick="submitForm()" class="btn btn-primary mt-4 text-white btn-primary-color">
                   <i class="fa fa-spinner fa-pulse fa-3x fa-fw text-sm" id="loading-spinner" style="display: none;"></i>
-                  <!-- <i class="fa fa-spinner fa-pulse fa-3x fa-fw "></i> -->
-                  <!-- <span class="sr-only">Loading...</span> -->
                   Search
-                </button>
-
-                <div id="loading-animation" class="hidden">
-                  <div class="mt-3" id="loading"></div>
-                  <!-- <div style="color:white" id="pleasewait">Please wait...</div> -->
+                  </button> -->
+                  <button id="submit-button" type="submit" onclick="startLoading()"
+                    class="btn btn-primary mt-4 text-white btn-primary-color">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw text-sm" id="loading-spinner"
+                      style="display: none;"></i>
+                    Search
+                  </button>
                 </div>
               </div>
-            </div>
-            <!-- <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <!-- <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button> -->
-          </div>
+            </div>
+          </form>
         </div>
         <!-- Search Form Ends -->
-
-        {% if data %}
-        <!--         
-        <div class="col-xl-6 col-md-6">
-          <div class="card card-stats">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <a href="{{data.url}}">
-                    <h3 class="card-title text-dark font-weight-bold mb-0">{{data.title}}</h3>
-                  </a>
-                </div>
-                <div class="col-auto">
-                  <div class="icon mt-3">
-                    {% if data.image %}
-                    <a href="#" class="avatar mr-3">
-                      <img alt="Image placeholder" src="{{data.image}}">
-                    </a>
-                    {% else %}
-                    <a href="{{data.url}}" class="avatar rounded-circle mr-3">
-                      {% if data.merchant == "flipkart" %}
-        
-                      <img alt="Image placeholder"
-                        src="https://w7.pngwing.com/pngs/5/879/png-transparent-flipkart-e-commerce-vu-televisions-sales-gmail-logo-blue-text-public-relations-thumbnail.png">
-                      {% elif data.merchant == "amazon" %}
-                      <img alt="Image placeholder"
-                        src="https://cdn.icon-icons.com/icons2/1195/PNG/512/1490889698-amazon_82521.png">
-                      {% else %}
-                      <img alt="Image placeholder"
-                        src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
-                      {% endif %}
-                      {% endif %}
-                    </a>
-                  </div>
-        
-                </div>
-              </div>
-              {% if data.price != '' %}
-              <span class="h2 text-dark font-weight-bold mb-0">{{data.price}}</span><br>
-              {% else %}
-              <span class="h4 text-warning font-weight-bold mb-0">Out of Stock</span><br>
-              {% endif %}
-        
-              <p class="h6 mt-3 mb-0">
-                <span class="text-dark ">Availability :
-                  {% if data.availability == "In Stock" %}
-                  <span class="text-nowrap text-success">In Stock</span><br></span>
-                {% else %}
-                <span class="text-nowrap text-warning">Out of Stock</span><br></span>
-                {% endif %}
-              </p>
-        
-              <div class="row">
-                <div class="col text-left">
-                  <a href="{{data.link}}" class="btn btn-success stretched-link">Buy Now</a>
-                </div>
-                <div class="col text-right">
-                  <a href="#" class="btn btn-info">Track Price</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-         -->
-        {% endif %}
 
       </div>
 
@@ -223,73 +153,205 @@
 <!-- Page content -->
 <div class="container-fluid mt-3 bg-white">
   <div class="row">
-    <div id="result-container">
 
-    </div>
-    <!--         
-        <div class="col-xl-8">
-          <div class="card bg-default">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-               
-                <div class="col">
-                  <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                  <h5 class="h3 text-white mb-0">Sales value</h5>
-                </div>
-                
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              
+    <div class="col-md-8 mx-md-auto" id="result-container">
+
+      {% if data%}
+      {% if data.msg == "error" %}
+      <div class="alert alert-danger alert-dismissible" style="width: 100%;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p class="font-weight-bold">Something went wrong. Please try again.</p>
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% if data and data.title %}
+
+      <div class="col-md-8 mx-md-auto">
+        <div class="card card-stats">
+          <div class="card-body">
+            <div class="row">
+              <div class="col text-left text-muted">
+                {% if data.merchant == "amazon"%}
+                <img class="align-self-start" src="/static/assets/img/theme/amazon-icon.png"
+                  style="width: 20px; height: 18px;" alt="amazon-icon">
+                <!-- <img class="align-self-start" src="/static/assets/img/theme/flipkart-icon.png"
+                            style="width: 20px; height: 1;" alt="flipkart-icon"> -->
+                <h6 class="heading-small text-muted mb-4 d-inline">Amazon</h6>
+                {% elif data.merchant == "flipkart" %}
+                <img class="align-self-start" src="/static/assets/img/theme/flipkart-icon.png"
+                  style="width: 20px; height: 18px;" alt="flipkart-icon">
+                <h6 class="heading-small text-muted mb-4 d-inline">Flipkart</h6>
+                {% else %}
+                <img class="align-self-start"
+                  src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png"
+                  style="width: 20px; height: 18px;" alt="cart-icon">
+                <h6 class="heading-small text-muted mb-4 d-inline">{{data.merchant}}</h6>
+                {% endif %}
+              </div>
+              <div class="col text-right text-muted">
+                <small>2 hrs ago</small>
               </div>
             </div>
 
-            <div class="card-body">
-              <div class="chart">
-                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+            <!-- Title Block -->
+
+            <div class="row mt-1">
+              <div class="col">
+                <a href="{{data.link}}" target="_blank" id="product-url">
+                  <h5 class="card-title font-weight-bold mb-0">{{data.title}}</h5>
+                </a>
               </div>
             </div>
-          
+
+            <div class="row mt-1">
+              <div class="col-xl-4 col-6">
+                <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+                  <img class="rounded align-items-center" style="height: auto; width: 100%;object-fit: cover;"
+                    src="{{data.image}}" alt="img">
+                </div>
+              </div>
+              <div class="col-xl-8 col-6 pl-0">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item p-1">
+                    <div class="row">
+                      <div class="col-6 text-muted font-weight-bold text-center heading-small">Price</div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.price}}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item p-1">
+                    <div class="row">
+                      <div class="col-6 text-muted font-weight-bold text-center heading-small">M.R.P</div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">
+                        {% if data.mrp %} {{data.mrp}} {% else %} - {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item p-1">
+                    <div class="row">
+                      <div class="col-6 text-muted font-weight-bold text-center heading-small pl-0 pr-0">Rating</div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">
+                        {% if data.rating %} {{data.rating}} ({{data.ratingCount}}){% else %} - {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item p-1">
+                    <div class="row">
+                      <div class="col-6 text-muted font-weight-bold text-center heading-small">Brand</div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">
+                        {% if data.brand %} {{data.brand}} {% else %} - {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {% if price_history_json %}
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <div class="card bg-default">
+                  <div class="card-header bg-transparent">
+                    <div class="row align-Sitems-center">
+                      <div class="col">
+                        <h6 class="text-uppercase text-light ls-1 mb-1">Performance</h6>
+                        <h5 class="h3 text-white mb-0">Price History</h5>
+                      </div>
+                      <!-- <div class="col">
+                        <ul class="nav nav-pills justify-content-end">
+                          <li class="nav-item mr-2 mr-md-0" data-toggle="chart1" data-target="#myHistoryChart"
+                            data-update='{"data":{"datasets":[{"data":[350, 430, 250, 600, 450, 450]}]}}'
+                            data-prefix="$" data-suffix="k">
+                            <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                              <span class="d-none d-md-block">Month</span>
+                              <span class="d-md-none">M</span>
+                            </a>
+                          </li>
+                          <li class="nav-item" data-toggle="chart1" data-target="#myHistoryChart"
+                            data-update='{"data":{"datasets":[{"data":[230,350, 430, 250, 600, 450]}]}}' data-prefix="$"
+                            data-suffix="k">
+                            <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                              <span class="d-none d-md-block">Week</span>
+                              <span class="d-md-none">W</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Chart -->
+                    <div class="chart1">
+                      <canvas id="priceHistoryChart" style="width: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if price_history_json %}
+            <div class="row rounded mt-0">
+              <div class="col text-left">
+                <ul class="list-group">
+                  <li class="list-group-item p-2">
+                    <div class="row">
+                      <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
+                      <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">₹{{data.lowest_price}}
+                      </div>
+                      <div class="col-6 text-dark font-weight-bold text-center heading-small">₹{{data.highest_price}}
+                      </div>
+                    </div>
+                    <!-- <div class="row">
+                                <div class="col-6 text-danger font-weight-bold text-center heading-small">
+                                  <a href="#" class="btn btn-info">Price Chart</a>
+                                </div>
+                              </div> -->
+                </ul>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="row mt-3">
+              <div class="col text-left">
+                <div class="d-flex flex-column">
+                  <span class="badge badge-dot d-block">
+                    <i class="bg-success"></i>
+                    <small class="status font-weight-bold">In Stock</small>
+                  </span>
+                  <a href="{{data.link}}" class="btn btn-success custom-btn"
+                    style="background: green; border-color: rgb(1, 108, 1);">Buy Now</a>
+                </div>
+              </div>
+              <div class="col text-right">
+                <div class="d-flex flex-column">
+                  <span class="badge badge-dot d-block">
+                    <small class="font-weight-bold text-muted custom-date-text">Last updated : 2 days ago</small>
+                  </span>
+                  <button id="submit-button" onclick="trackProduct()" class="btn btn-primary text-white custom-btn"
+                    style="background: rgb(46, 87, 211); border-color: royalblue;">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw text-sm" id="tracking-spinner"
+                      style="display: none;"></i>
+                    Track Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-         -->
+      </div>
+      {% endif %}
 
-    <!-- <div class="col-xl-4">
-          <div class="card">
-            
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
-                </div>
-              </div>
-            </div>
-          
-            <div class="card-body">              
-              <div class="chart">
-                <canvas id="chart-bars" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div> -->
+    </div>
 
+    <div class="col-md-8 mx-md-auto">
+      <div id="alert-container">
+      </div>
+    </div>
   </div>
-
-
 
   {% include "includes/footer.html" %}
 
@@ -300,25 +362,132 @@
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
 
-<script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
-<script>
+<!-- <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script> -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<!-- Loading animation -->
+<script>
+  function startLoading() {
+
+    document.getElementById('submit-button').disabled = true;
+
+    var loadingSpinner = document.getElementById("loading-spinner");
+
+    loadingSpinner.style.display = "inline-block";
+
+    document.getElementById('searchForm').submit();
+
+  }
+</script>
+
+
+<!-- Load Price History -->
+<script>
+  // Your JavaScript function
+  function loadPriceHistory() {
+
+    var ctx = document.getElementById('priceHistoryChart');
+
+    var price = JSON.parse('{{ price_history_json | safe}}');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: price,
+          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          borderColor: '#0080ff',
+          borderWidth: 1,
+          cubicInterpolationMode: 'monotone',
+          pointRadius: 2,
+          pointHoverRadius: 5,
+          pointHoverBorderWidth: 3,
+          pointBackgroundColor: '#0080ff',
+          pointHoverBorderColor: 'rgba(0, 128, 255, 0.25)',
+        }],
+      },
+      options: {
+        responsive: true,
+
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+
+        plugins: {
+          legend: {
+            display: false
+          },
+        },
+
+        scales: {
+          x: {
+            type: 'time',
+            grid: { display: true },
+            ticks: { maxTicksLimit: 8 },
+            title: {
+              display: true,
+              text: "Roll over the chart for price information",
+            },
+          },
+          y: {
+            grid: { display: false },
+            beginAtZero: false,
+            ticks: {
+              maxTicksLimit: 8,
+              callback: function (value, index, values) {
+                return '₹' + value;
+              },
+            }
+          },
+
+        }
+      },
+
+      plugins: [{
+        afterDraw: chart => {
+          if (chart.tooltip?._active?.length) {
+            let x = chart.tooltip._active[0].element.x;
+            let yAxis = chart.scales.y;
+            let ctx = chart.ctx;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, yAxis.top);
+            ctx.lineTo(x, yAxis.bottom);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#ff0000';
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+      }],
+
+
+    });
+
+  }
+
+  // Attach the function to the window.onload event
+  window.onload = function () {
+    loadPriceHistory();
+  };
+</script>
+
+<!-- Search Submit -->
+<script>
   function submitForm() {
     console.log("submit clicked")
     var inputField = document.getElementById("input-field");
-    var submitButton = document.getElementById("submit-button");
-    var loadingAnimation = document.getElementById("loading-animation");
     var resultContainer = document.getElementById("result-container");
-    var button_placeholder = document.getElementById("button-placeholder");
-    var pleasewait_text = document.getElementById("pleasewait");
-
     var loadingSpinner = document.getElementById("loading-spinner");
 
     var inputValue = inputField.value;
     console.log(inputValue);
-    // submitButton.style.display = "none";
-    // loadingAnimation.style.display = "block";
 
     loadingSpinner.style.display = "inline-block";
 
@@ -330,21 +499,114 @@
         csrfmiddlewaretoken: "{{ csrf_token }}"
       },
       success: function (response) {
-        // loadingAnimation.style.display = "none";
-        // submitButton.style.display = "inline-block";
         loadingSpinner.style.display = "none";
         resultContainer.innerHTML = response;
+
+        var ctx = document.getElementById('priceHistoryChart');
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        }
+        );
+
+
+
+        // new Chart(ctx, {
+        //   type: 'line',
+        //   data: {
+        //     datasets: [{
+        //       data: [{ 'x': 2000, 'y': 2 }],
+        //       backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        //       borderColor: '#0080ff',
+        //       borderWidth: 1,
+        //       cubicInterpolationMode: 'monotone',
+        //       pointRadius: 2,
+        //       pointHoverRadius: 5,
+        //       pointHoverBorderWidth: 3,
+        //       pointBackgroundColor: '#0080ff',
+        //       pointHoverBorderColor: 'rgba(0, 128, 255, 0.25)',
+        //     }],
+        //   },
+        //   options: {
+        //     responsive: true,
+
+        //     interaction: {
+        //       intersect: false,
+        //       mode: 'index',
+        //     },
+
+        //     plugins: {
+        //       legend: {
+        //         display: false
+        //       },
+        //     },
+
+        //     scales: {
+        //       x: {
+        //         type: 'time',
+        //         grid: { display: true },
+        //         ticks: { maxTicksLimit: 8 },
+        //         title: {
+        //           display: true,
+        //           text: "Roll over the chart for price information",
+        //         },
+        //       },
+        //       y: {
+        //         grid: { display: false },
+        //         beginAtZero: false,
+        //         ticks: {
+        //           maxTicksLimit: 8,
+        //           callback: function (value, index, values) {
+        //             return '₹' + value;
+        //           },
+        //         }
+        //       },
+
+        //     }
+        //   },
+
+        //   plugins: [{
+        //     afterDraw: chart => {
+        //       if (chart.tooltip?._active?.length) {
+        //         let x = chart.tooltip._active[0].element.x;
+        //         let yAxis = chart.scales.y;
+        //         let ctx = chart.ctx;
+        //         ctx.save();
+        //         ctx.beginPath();
+        //         ctx.moveTo(x, yAxis.top);
+        //         ctx.lineTo(x, yAxis.bottom);
+        //         ctx.lineWidth = 1;
+        //         ctx.strokeStyle = '#ff0000';
+        //         ctx.stroke();
+        //         ctx.restore();
+        //       }
+        //     }
+        //   }],
+        // });
+
       },
       error: function () {
         console.log('Error returned')
         loadingSpinner.style.display = "none";
-        // loadingAnimation.style.display = "none";
-        // submitButton.style.display = "inline-block";
       }
     });
 
   }
-
 </script>
 
 <!-- <script>
@@ -357,9 +619,14 @@
   }
 </script> -->
 
+<!-- Track Product -->
 <script>
   function trackProduct() {
     console.log("track request")
+    var alertContainer = document.getElementById("alert-container");
+    var trackingSpinner = document.getElementById("tracking-spinner");
+    trackingSpinner.style.display = "inline-block";
+
     var productUrl = $('#product-url').attr('href');;
     console.log(productUrl);
 
@@ -372,11 +639,18 @@
       },
       success: function (response) {
         console.log("success")
-        // resultContainer.innerHTML = response;
-        window.location.href = '/track';
+        console.log(response)
+        trackingSpinner.style.display = "none";
+        alertContainer.innerHTML = response;
+        // window.location.href = '/track';
       },
-      error: function () {
-        console.log('Error returned')
+      error: function (xhr, textStatus, errorThrown) {
+        // Handle errors, e.g., redirect to login page if user is not logged in
+        if (xhr.status === 403) {
+          window.location.href = '/login/';  // Replace with your actual login URL
+        } else {
+          alert("Error: " + errorThrown);
+        }
       }
     });
 

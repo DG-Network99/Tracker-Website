@@ -1,0 +1,359 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<style>
+    .input-group-alternative {
+        border: 1px solid rgb(200, 245, 248);
+    }
+</style>
+
+{% endblock stylesheets %}
+
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-primary pb-3 bg-white">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 d-inline-block mb-0 text-dar text-primary-color" style="font-weight: 700;">Price
+                        Tracker
+                    </h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="/products" class="btn btn-sm btn-neutral text-primary-color">My
+                        Products</a>
+                </div>
+            </div>
+            <!-- Card stats -->
+            <div class="row">
+                <!-- Search Form Starts -->
+                <div class="col-xl-9 col-md-8 align-items-center mx-auto">
+                    <!-- <form class=" navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main"> -->
+                    <div id="navbar-search-main" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-alternative input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                                <input id="input-field" class="form-control" name="search"
+                                    placeholder="Paste the product url" type="text">
+                            </div>
+                            <div id="button-placeholder" class="text-center">
+
+                                <button id="submit-button" onclick="submitForm()"
+                                    class="btn btn-primary mt-4 text-white btn-primary-color">
+                                    <!-- <i class="fa fa-spinner fa-spin fa-3x fa-fw text-sm" id="loading-spinner" style="display: none;"></i> -->
+                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw text-sm" id="loading-spinner"
+                                        style="display: none;"></i>
+                                    Search
+                                </button>
+
+                                <div id="loading-animation" class="hidden">
+                                    <div class="mt-3" id="loading"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button> -->
+                    </div>
+                </div>
+                <!-- Search Form Ends -->
+
+            </div>
+
+            <!--       
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!- Card body ->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                <span class="h2 font-weight-bold mb-0">2,356</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                  <i class="ni ni-chart-pie-35"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!- Card body ->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                <span class="h2 font-weight-bold mb-0">924</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                  <i class="ni ni-money-coins"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!- Card body ->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                <span class="h2 font-weight-bold mb-0">49,65%</span>
+                
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                  <i class="ni ni-chart-bar-32"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div> 
+      -->
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt-3 bg-white">
+    <div class="row">
+
+        <div id="result-container">
+
+        </div>
+
+        <div class="col-md-8 mx-md-auto">
+            <div id="alert-container">
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="chart1">
+            <canvas id="myHistoryChart" style="width: 100%;"></canvas>
+        </div>
+    </div>
+
+    {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+<!-- Search Submit -->
+<script>
+    function submitForm() {
+        console.log("submit clicked")
+        var inputField = document.getElementById("input-field");
+        var resultContainer = document.getElementById("result-container");
+        var loadingSpinner = document.getElementById("loading-spinner");
+
+        var inputValue = inputField.value;
+        console.log(inputValue);
+
+        loadingSpinner.style.display = "inline-block";
+
+        $.ajax({
+            type: "POST",
+            url: "/",
+            data: {
+                input_value: inputValue,
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            success: function (response) {
+                loadingSpinner.style.display = "none";
+                resultContainer.innerHTML = response;
+
+                var ctx = document.getElementById('priceHistoryChart');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [12, 19, 3, 5, 2, 3],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                }
+                );
+
+
+
+                // new Chart(ctx, {
+                //   type: 'line',
+                //   data: {
+                //     datasets: [{
+                //       data: [{ 'x': 2000, 'y': 2 }],
+                //       backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                //       borderColor: '#0080ff',
+                //       borderWidth: 1,
+                //       cubicInterpolationMode: 'monotone',
+                //       pointRadius: 2,
+                //       pointHoverRadius: 5,
+                //       pointHoverBorderWidth: 3,
+                //       pointBackgroundColor: '#0080ff',
+                //       pointHoverBorderColor: 'rgba(0, 128, 255, 0.25)',
+                //     }],
+                //   },
+                //   options: {
+                //     responsive: true,
+
+                //     interaction: {
+                //       intersect: false,
+                //       mode: 'index',
+                //     },
+
+                //     plugins: {
+                //       legend: {
+                //         display: false
+                //       },
+                //     },
+
+                //     scales: {
+                //       x: {
+                //         type: 'time',
+                //         grid: { display: true },
+                //         ticks: { maxTicksLimit: 8 },
+                //         title: {
+                //           display: true,
+                //           text: "Roll over the chart for price information",
+                //         },
+                //       },
+                //       y: {
+                //         grid: { display: false },
+                //         beginAtZero: false,
+                //         ticks: {
+                //           maxTicksLimit: 8,
+                //           callback: function (value, index, values) {
+                //             return '₹' + value;
+                //           },
+                //         }
+                //       },
+
+                //     }
+                //   },
+
+                //   plugins: [{
+                //     afterDraw: chart => {
+                //       if (chart.tooltip?._active?.length) {
+                //         let x = chart.tooltip._active[0].element.x;
+                //         let yAxis = chart.scales.y;
+                //         let ctx = chart.ctx;
+                //         ctx.save();
+                //         ctx.beginPath();
+                //         ctx.moveTo(x, yAxis.top);
+                //         ctx.lineTo(x, yAxis.bottom);
+                //         ctx.lineWidth = 1;
+                //         ctx.strokeStyle = '#ff0000';
+                //         ctx.stroke();
+                //         ctx.restore();
+                //       }
+                //     }
+                //   }],
+                // });
+
+            },
+            error: function () {
+                console.log('Error returned')
+                loadingSpinner.style.display = "none";
+            }
+        });
+
+    }
+</script>
+
+<!-- <script>
+  function closeFunction() {
+    var closeBtn = document.getElementById("html-body");
+    closeBtn.classList.remove("nav-open");
+    closeBtn.classList.remove("g-sidenav-show");
+    closeBtn.classList.remove("g-sidenav-pinned");
+    closeBtn.classList.add("g-sidenav-hidden");
+  }
+</script> -->
+
+<!-- Track Product -->
+<script>
+    function trackProduct() {
+        console.log("track request")
+        var alertContainer = document.getElementById("alert-container");
+        var trackingSpinner = document.getElementById("tracking-spinner");
+        trackingSpinner.style.display = "inline-block";
+
+        var productUrl = $('#product-url').attr('href');;
+        console.log(productUrl);
+
+        $.ajax({
+            type: "POST",
+            url: "/track",
+            data: {
+                productUrl: productUrl,
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            success: function (response) {
+                console.log("success")
+                console.log(response)
+                trackingSpinner.style.display = "none";
+                alertContainer.innerHTML = response;
+                // window.location.href = '/track';
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // Handle errors, e.g., redirect to login page if user is not logged in
+                if (xhr.status === 403) {
+                    window.location.href = '/login/';  // Replace with your actual login URL
+                } else {
+                    alert("Error: " + errorThrown);
+                }
+            }
+        });
+
+    }
+</script>
+
+{% endblock javascripts %}

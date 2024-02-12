@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from django.urls import path, re_path
 from apps.home import views
 from django.views.generic import RedirectView
@@ -11,6 +6,10 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    path('notification_update', views.notification_update, name='notification_update'),
+    path('track', views.track, name='track'),
+    path('stop_track', views.stop_track, name='stop_track'),
+    # path('products', views.products, name='products'),
     # path('notifications/<str:id>$', RedirectView.as_view(url = 'notifications/<str:id>/')),
     # path('notifications/<str:id>/', views.notifications, name='notifications'),
     # Matches any html file

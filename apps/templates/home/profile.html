@@ -2,176 +2,209 @@
 
 {% block title %} Profile {% endblock title %}
 
+{% block stylesheets %}
+
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
+{% endblock stylesheets %}
+
 {% block content %}
 
-<div class="header pb-6 d-flex align-items-center"
-  style="min-height: 400px; background-image: url(/static/assets/img/theme/img-1-1000x600.jpg); background-size: cover; background-position: center top;">
+<div class="header pb-6 d-flex align-items-center">
   <!-- Mask -->
   <span class="mask bg-gradient-default opacity-8"></span>
   <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
+  <div class="container-fluid d-flex align-items-center mt-3">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
-        <h1 class="display-2 text-white">
-          Hello {{ request.user.username }}
-        </h1>
-        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work
-          and manage your projects or assigned tasks</p>
-        <a href="#!" class="btn btn-neutral">Edit profile</a>
+      <div class="col-12">
+        <h1 class="text-white">Hello <span class="text-capitalize">{{ user_name }}!</span></h1>
       </div>
     </div>
   </div>
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--6">
+<div class="container-fluid mt--5">
+  {% for message in messages %}
+  {% if message.tags == 'error' %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">{{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+  {% if message.tags == 'success' %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  {% if success_msg %}
+  {% endif %}
+  {% if error_msg %}
+  {% endif %}
+
   <div class="row">
-    <div class="col-xl-4 order-xl-2">
+    <!-- <div class="col-xl-4 order-xl-2">
       <div class="card card-profile">
-        <img src=" /static/assets/img/theme/profile-cover.jpg" alt="Image placeholder" class="card-img-top">
-        <div class="row justify-content-center">
-          <div class="col-lg-3 order-lg-2">
-            <div class="card-profile-image">
-              <a href="#">
-                <img src="/static/assets/img/theme/team-4.jpg" class="rounded-circle">
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+
+        <div class="card-header text-center border-0 pb-0 pb-md-4">
           <div class="d-flex justify-content-between">
-            <a href="#" class="btn btn-sm btn-info  mr-4 ">Connect</a>
-            <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+            <h3 class="mb-0">My Products</h3>
           </div>
         </div>
         <div class="card-body pt-0">
           <div class="row">
             <div class="col">
-              <div class="card-profile-stats d-flex justify-content-center">
+              <div class="card-profile-stats d-flex flex-wrap justify-content-center">
                 <div>
                   <span class="heading">22</span>
-                  <span class="description">Friends</span>
+                  <span class="description">Amazon</span>
                 </div>
                 <div>
                   <span class="heading">10</span>
-                  <span class="description">Photos</span>
+                  <span class="description">Flipkart</span>
                 </div>
                 <div>
                   <span class="heading">89</span>
-                  <span class="description">Comments</span>
+                  <span class="description">Myntra</span>
+                </div>
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Ajio</span>
+                </div>
+                <div>
+                  <span class="heading">10</span>
+                  <span class="description">Shopsy</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Others</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="text-center">
-            <h5 class="h3">
-              {{ request.user.username }}
-            </h5>
-            <div class="h5 font-weight-300">
-              {{ request.user.email }}
-            </div>
-            <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-            </div>
-            <div>
-              <i class="ni education_hat mr-2"></i>University of Computer Science
-            </div>
-          </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="col-xl-8 order-xl-1">
       <div class="card">
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Edit profile </h3>
+              <h3 class="mb-0">My Profile</h3>
             </div>
             <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <form>
-            <h6 class="heading-small text-muted mb-4">User information</h6>
+
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h6 class="heading-small text-muted mb-4">User information</h6>
+            </div>
+            <div class="col-4 text-right">
+            </div>
+          </div>
+          <form method="POST" id="profile-form" action="/profile">
+            {% csrf_token %}
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">Username</label>
                     <input type="text" id="input-username" class="form-control" placeholder="Username"
-                      value="{{ request.user.username }}">
+                      value="{{ user_name }}" readonly>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Email address</label>
-                    <input type="email" id="input-email" class="form-control" placeholder="{{ request.user.email }}">
+                    <input type="email" id="input-email" class="form-control" placeholder="{{ request.user.email }}"
+                      readonly>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-first-name">First name</label>
-                    <input type="text" id="input-first-name" class="form-control" placeholder="First name"
-                      value="Lucky">
+                    <label class="form-control-label" for="input-phone-number">Phone Number</label>
+                    <input type="number" id="input-phone-number" class="form-control" name="input-phone-number"
+                      value="{{user_phone}}" required>
+                    <small id="phone-helptext" class="form-text text-muted">Enter 10 Digit mobile number</small>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Last name</label>
-                    <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="Jesse">
+                    <label class="form-control-label" for="input-gender">Gender</label>
+                    <select class="form-control" id="input-gender" name="input-gender" required>
+                      <option id="gender-select" value="">Select</option>
+                      <option id="gender-male" value="male">Male</option>
+                      <option id="gender-female" value="female">Female</option>
+                      <option id="gender-others" value="others">Others</option>
+                    </select>
+                    <small id="gender-helptext" class="form-text text-danger"></small>
                   </div>
                 </div>
-              </div>
-            </div>
-            <hr class="my-4" />
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Contact information</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-address">Address</label>
-                    <input id="input-address" class="form-control" placeholder="Home Address"
-                      value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
-                  </div>
+                <div class="col-lg-12">
+                  <button type="submit" id="profile-submit" class="btn btn-info">Update</button>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-city">City</label>
-                    <input type="text" id="input-city" class="form-control" placeholder="City" value="New York">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-country">Country</label>
-                    <input type="text" id="input-country" class="form-control" placeholder="Country"
-                      value="United States">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-country">Postal code</label>
-                    <input type="number" id="input-postal-code" class="form-control" placeholder="Postal code">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="my-4" />
-            <!-- Description -->
-            <h6 class="heading-small text-muted mb-4">About me</h6>
-            <div class="pl-lg-4">
-              <div class="form-group">
-                <label class="form-control-label">About Me</label>
-                <textarea rows="4" class="form-control"
-                  placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                <small class="form-text text-muted ml-3 mt-2">We'll never share your email/phone number with anyone
+                  else.</small>
               </div>
             </div>
           </form>
+          <hr class="my-4" />
+          <!-- Address -->
+          <h6 class="heading-small text-muted mb-4">Change Password</h6>
+          <div class="pl-lg-4">
+            <form method="post" id="passwrod-form" action="/profile">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="old-password">Old Password</label>
+                    <input type="password" id="old-password" class="form-control" name="old-password" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-password1">New Password</label>
+                    <input type="password" id="input-password1" class="form-control" name="input-password1" required>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-password2">Confirm New Password</label>
+                    <input type="password" id="input-password2" class="form-control" name="input-password2" required>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="helptext" id="password-letters-helptext"></div>
+                  <div class="helptext" id="password-same-helptext"></div>
+                </div>
+                <div class="col-lg-6 mt-2">
+                  <button type="submit" class="btn btn-info" id="password-change-submit">Change Password</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -183,5 +216,146 @@
 
 {% endblock content %}
 
-<!-- Specific JS goes HERE -->
-{% block javascripts %}{% endblock javascripts %}
+
+{% block javascripts %}
+
+<!-- Page Refresh -->
+<script>
+  if (window.performance) {
+    console.info("window.performance works fine on this browser");
+  }
+  // console.info(performance.navigation.type);
+  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    // console.info("This page is reloaded");
+    // window.location.href = '/profile';
+
+  } else {
+    // console.info("This page is not reloaded");
+  }
+</script>
+
+
+
+<!-- Gender -->
+<script>
+  var user_gender = "{{ user_gender }}";
+  var selectElement = document.getElementById("input-gender");
+  var options = selectElement.options;
+  for (var i = 0; i < options.length; i++) {
+    if (options[i].value === user_gender) {
+      options[i].selected = true;
+      break;
+    }
+  }
+</script>
+
+<!-- Validate Password -->
+<script>
+
+  const pass1 = document.getElementById("input-password1")
+  const pass2 = document.getElementById("input-password2")
+  const helptext1 = document.getElementById("password-letters-helptext")
+  const helptext2 = document.getElementById("password-same-helptext")
+  const passSubmit = document.getElementById("password-change-submit")
+  passSubmit.disabled = true
+  // passSubmit.style.opacity = (0.4);
+
+  if (pass1 === '' && pass2 === '') {
+    helptext2.innerText = '';
+  }
+
+  // pass1.onblur = function () {
+  //     helptext1.innerHTML = "";
+  // }
+
+  function minimum_letters_pass() {
+    helptext1.innerHTML = "&check; minimum of 8 letters";
+    helptext1.classList.remove("text-danger");
+    helptext1.classList.add("text-success");
+  }
+
+  function minimum_letters_fail() {
+    helptext1.classList.add("text-danger");
+    helptext1.innerHTML = "&#10006; minimum of 8 letters";
+  }
+
+  function password_pass() {
+    helptext2.innerHTML = "&check; passwords are same";
+    helptext2.classList.remove("text-danger");
+    helptext2.classList.add("text-success");
+    passSubmit.disabled = false
+    passSubmit.style.opacity = (1);
+  }
+
+  function password_fail() {
+    helptext2.classList.add("text-danger");
+    helptext2.innerHTML = "&#10006; passwords are different";
+    passSubmit.disabled = true
+    passSubmit.style.opacity = (0.4);
+  }
+
+  pass1.onkeyup = function () {
+    if (pass1.value.length >= 8) { minimum_letters_pass(); }
+    else { minimum_letters_fail(); }
+
+    if (pass2.value === pass1.value) {
+      if (pass1.value.length >= 8 && pass2.value.length >= 8) {
+        password_pass();
+      }
+    } else {
+      password_fail();
+    }
+  }
+
+  // pass2.onblur = function () {
+  //     helptext2.innerHTML = "";
+  // }
+
+  pass2.onkeyup = function () {
+    if (pass2.value === pass1.value) {
+      if (pass1.value.length >= 8 && pass2.value.length >= 8) {
+        password_pass();
+      }
+    } else {
+      password_fail();
+    }
+  }
+
+</script>
+
+<!-- validate number -->
+<script>
+
+  var profileSubmit = document.getElementById("profile-submit");
+  var inputNumber = document.getElementById('input-phone-number');
+  var inputGender = document.getElementById('input-gender');
+  const phoneHelpText = document.getElementById('phone-helptext');
+  const genderHelpText = document.getElementById('gender-helptext');
+
+  function validateNumber(input) {
+    var re = /^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/
+    return re.test(input)
+  }
+
+  function validateForm(event) {
+    if (!validateNumber(inputNumber.value)) {
+      phoneHelpText.classList.remove('text-muted');
+      phoneHelpText.classList.add('text-danger');
+      phoneHelpText.innerHTML = 'Please enter valid 10 digit phone number';
+    } else {
+
+      if (inputGender.value === "Select") {
+        genderHelpText.innerHTML = "Provide Gender"
+      }
+      else {
+        profileSubmit.disabled = true;
+        profileSubmit.style.opacity = (0.4);
+        document.getElementById('profile-form').submit();
+      }
+    }
+    event.preventDefault();
+  }
+
+  document.getElementById('profile-form').addEventListener('submit', validateForm)
+</script>
+{% endblock javascripts %}

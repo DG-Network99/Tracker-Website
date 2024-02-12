@@ -1,6 +1,6 @@
-{% if data %}
+{% if data and data.title %}
 
-<div class="col-xl-8 mx-xl-auto col-md-6">
+<div class="col-md-8 mx-md-auto">
   <div class="card card-stats">
     <div class="card-body">
       <div class="row">
@@ -40,14 +40,14 @@
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small">Price</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.currentPrice}}
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.price}}
                 </div>
               </div>
             </li>
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small">M.R.P</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.currentPrice}}
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.mrp}}
                 </div>
               </div>
             </li>
@@ -55,14 +55,15 @@
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small pl-0 pr-0">Rating</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">4.55 (2000)</div>
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.rating}}
+                  ({{data.ratingCount}})</div>
               </div>
             </li>
 
             <li class="list-group-item p-1">
               <div class="row">
                 <div class="col-6 text-muted font-weight-bold text-center heading-small">Brand</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">Amazon Basics</div>
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.brand}}</div>
               </div>
             </li>
           </ul>
@@ -77,7 +78,7 @@
               <div class="row">
                 <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
                 <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
-                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.currentPrice}}
+                <div class="col-6 text-dark font-weight-bold text-center heading-small">{{data.price}}
                 </div>
                 <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999</div>
               </div>
@@ -86,13 +87,12 @@
                                   <a href="#" class="btn btn-info">Price Chart</a>
                                 </div>
                               </div> -->
-
-
           </ul>
         </div>
       </div>
 
       <div class="row mt-3">
+
         <div class="col text-left">
           <!-- <a href="#" class="btn btn-success" style="
                     background: #FFA41C;
@@ -106,7 +106,6 @@
                             background: green;
                             border-color: rgb(1, 108, 1);">Buy Now</a>
           </div>
-
         </div>
 
         <div class="col text-right">
@@ -123,74 +122,42 @@
                             border-color: royalblue;">Track Now</a> -->
             <button id="submit-button" onclick="trackProduct()" class="btn btn-primary text-white custom-btn" style="
                             background: rgb(46, 87, 211);
-                            border-color: royalblue;">Track Now</button>
+                            border-color: royalblue;">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw text-sm" id="tracking-spinner" style="display: none;"></i>
+                            Track Now</button>
           </div>
-
         </div>
 
+      </div>
+
+      <div class="row mt-3">
+        <div class="chart">
+          <canvas id="priceHistoryChart" style="width: 100%;"></canvas>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!--
-  <div class="col-xl-6 col-md-6">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <a href="{{data.url}}">
-            <h3 class="card-title text-dark font-weight-bold mb-0">{{data.title}}</h3>
-          </a>
-        </div>
-        <div class="col-auto">
-          <div class="icon mt-3">
-            {% if data.image %}
-            <a href="#" class="avatar mr-3">
-              <img alt="Image placeholder" src="{{data.image}}">
-            </a>
-            {% else %}
-            <a href="{{data.url}}" class="avatar rounded-circle mr-3">
-              {% if data.merchant == "flipkart" %}
-
-              <img alt="Image placeholder"
-                src="https://w7.pngwing.com/pngs/5/879/png-transparent-flipkart-e-commerce-vu-televisions-sales-gmail-logo-blue-text-public-relations-thumbnail.png">
-              {% elif data.merchant == "amazon" %}
-              <img alt="Image placeholder"
-                src="https://cdn.icon-icons.com/icons2/1195/PNG/512/1490889698-amazon_82521.png">
-              {% else %}
-              <img alt="Image placeholder"
-                src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
-              {% endif %}
-              {% endif %}
-            </a>
-          </div>
-        </div>
-      </div>
-      {% if data.price != '' %}
-      <span class="h2 text-dark font-weight-bold mb-0">{{data.price}}</span><br>
-      {% else %}
-      <span class="h4 text-warning font-weight-bold mb-0">Out of Stock</span><br>
-      {% endif %}
-
-      <p class="h6 mt-3 mb-0">
-        <span class="text-dark ">Availability :
-          {% if data.availability == "In Stock" %}
-          <span class="text-nowrap text-success">In Stock</span><br></span>
-        {% else %}
-        <span class="text-nowrap text-warning">Out of Stock</span><br></span>
-        {% endif %}
-      </p>
-
-      <div class="row">
-        <div class="col text-left">
-          <a href="{{data.link}}" class="btn btn-success stretched-link">Buy Now</a>
-        </div>
-        <div class="col text-right">
-          <a href="/products" class="btn btn-info">Track Price</a>
-        </div>
-      </div>
-    </div>
-  </div> 
--->
-
 
 {% endif %}
+
+{% if alert %}
+{% if alert.message == "success" %}
+<div class="alert alert-success bg-primary-color alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <p class="font-weight-bold">Yey!! Your Product is added for tracking. View your <a href="/products">Products</a></p>
+</div>
+{% elif alert.message == "failed" %}
+<div class="alert alert-warning alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <p class="font-weight-bold">The product might be added already. Please check <a href="/products">Products</a></p>
+</div>
+{% elif alert.message == "error" %}
+<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <p class="font-weight-bold">Something went wrong. Please try again.</p>
+</div>
+{% endif %}
+{% endif %}
+
+

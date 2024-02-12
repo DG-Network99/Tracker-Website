@@ -1,0 +1,1400 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    .hidden {
+        display: none;
+    }
+
+    #loading {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        border: 4px solid rgba(239, 237, 162, 0.627);
+        border-radius: 50%;
+        border-top-color: #efe449;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+    }
+
+    /* .custom-date-text {
+    font-size: 3.0vw;
+
+  }
+
+  .custom-text-small-m {
+    font-size: 3.1vw;
+  }
+
+  .custom-text-medium-s {
+    font-size: 3.3vw;
+  } */
+
+
+
+    @keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @media all and (min-device-width: 720px) {
+        h5 {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media all and (max-device-width: 720px) {
+        h5 {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media all and (max-device-width: 460px) {
+        .custom-date-text {
+            /* font-size: 3.0vw; */
+            font-size: 0.68rem;
+
+        }
+
+        .custom-text-small-m {
+            /* font-size: 3.1vw; */
+            font-size: 0.68rem;
+        }
+
+        .custom-text-medium-s {
+            /* font-size: 3.3vw; */
+            font-size: 0.68rem;
+        }
+    }
+
+    @media all and (max-device-width: 640px) {
+        .custom-btn {
+            /* font-size: 3.2vw; */
+            font-size: 0.7rem;
+        }
+
+        h5 {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media all and (max-device-width: 320px) {
+        h5 {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-3">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h3 text-primary-color d-inline-block mb-0">My Products</h6>
+                    <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">My Products</a></li>
+              <li class="breadcrumb-item active" aria-current="page">My Products</li>
+            </ol>
+          </nav> -->
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="#" class="btn btn-sm btn-neutral">Filter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <!-- Hardcode Data for Products -->
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+                            <img class="align-self-start"
+                                src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png"
+                                style="width: auto; height: 18px;" alt="amazon-icon">
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                style="width: auto; height: 18px;" alt="flipkart-icon"> -->
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="https://amazon.com" target="_blank">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp
+                                    for Reading, Working on PC,
+                                    Laptop, Power Bank, Bedroom (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="/static/assets/img/theme/flipkart2-icon.png" alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                                        src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                                        style="height: fit-content ;width: 100%;object-fit: cover;"
+                                        src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-3 py-2 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn"
+                                    style="background: green; border-color: rgb(1, 108, 1);">Buy Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                                      background: rgb(46, 87, 211);
+                                      border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4  col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                style="width: fit-content; height: 16px;" alt="amazon-icon"> -->
+                            <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                                style="width: auto; height: 18px;" alt="flipkart-icon">
+
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+                    <!-- Title Block -->
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="#">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp for Reading, Working on PC, Laptop, Power
+                                    Bank, Bedroom
+                                    (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/71hIfcIPyxS._SX522_.jpg" alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                              src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                              style="height: fit-content ;width: 100%;object-fit: cover;"
+                              src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row rounded mt-3">
+                <div class="col text-left">
+                  <ul class="list-group">
+                    <li class="list-group-item p-2">
+                      <div class="row">
+                        <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
+                        <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
+                        <div class="col-6 text-dark font-weight-bold text-center heading-small">₹4,599</div>
+                        <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999</div>
+                      </div>
+                  </ul>
+                </div>
+              </div> -->
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <!-- <a href="#" class="btn btn-success" style="
+                    background: #FFA41C;
+                    border-color: #FF8F00;">Buy Now</a> -->
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn" style="
+                            background: green;
+                            border-color: rgb(1, 108, 1);">Buy Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <!-- <span class="badge badge-dot d-block">
+                              <i class="bg-success"></i>
+                              <small class="status font-weight-bold">IN-STOCK</small>
+                            </span> -->
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                            background: rgb(46, 87, 211);
+                            border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4  col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                    style="width: fit-content; height: 16px;" alt="amazon-icon"> -->
+                            <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                                style="width: auto; height: 18px;" alt="flipkart-icon">
+
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+                    <!-- Title Block -->
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="#">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp for Reading, Working on PC, Laptop, Power
+                                    Bank, Bedroom
+                                    (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/41BOKuqzdOL._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                                  src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                                  style="height: fit-content ;width: 100%;object-fit: cover;"
+                                  src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row rounded mt-3">
+                    <div class="col text-left">
+                      <ul class="list-group">
+                        <li class="list-group-item p-2">
+                          <div class="row">
+                            <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
+                            <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
+                            <div class="col-6 text-dark font-weight-bold text-center heading-small">₹4,599</div>
+                            <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999</div>
+                          </div>
+                      </ul>
+                    </div>
+                  </div> -->
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <!-- <a href="#" class="btn btn-success" style="
+                        background: #FFA41C;
+                        border-color: #FF8F00;">Buy Now</a> -->
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn" style="
+                                background: green;
+                                border-color: rgb(1, 108, 1);">Buy Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <!-- <span class="badge badge-dot d-block">
+                                  <i class="bg-success"></i>
+                                  <small class="status font-weight-bold">IN-STOCK</small>
+                                </span> -->
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                                background: rgb(46, 87, 211);
+                                border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+                            <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                                style="width: auto; height: 16px;" alt="amazon-icon">
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                    style="width: auto; height: 18px;" alt="flipkart-icon"> -->
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="https://amazon.com" target="_blank">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp
+                                    for Reading, Working on PC,
+                                    Laptop, Power Bank, Bedroom (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                                            src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                                            style="height: fit-content ;width: 100%;object-fit: cover;"
+                                            src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn"
+                                    style="background: green; border-color: rgb(1, 108, 1);">Buy
+                                    Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                                          background: rgb(46, 87, 211);
+                                          border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4  col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                    style="width: fit-content; height: 16px;" alt="amazon-icon"> -->
+                            <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                                style="width: auto; height: 18px;" alt="flipkart-icon">
+
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+                    <!-- Title Block -->
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="#">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp for Reading, Working on PC, Laptop, Power
+                                    Bank, Bedroom
+                                    (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/41BOKuqzdOL._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                                  src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                                  style="height: fit-content ;width: 100%;object-fit: cover;"
+                                  src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row rounded mt-3">
+                    <div class="col text-left">
+                      <ul class="list-group">
+                        <li class="list-group-item p-2">
+                          <div class="row">
+                            <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
+                            <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
+                            <div class="col-6 text-dark font-weight-bold text-center heading-small">₹4,599</div>
+                            <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999</div>
+                          </div>
+                      </ul>
+                    </div>
+                  </div> -->
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <!-- <a href="#" class="btn btn-success" style="
+                        background: #FFA41C;
+                        border-color: #FF8F00;">Buy Now</a> -->
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn" style="
+                                background: green;
+                                border-color: rgb(1, 108, 1);">Buy Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <!-- <span class="badge badge-dot d-block">
+                                  <i class="bg-success"></i>
+                                  <small class="status font-weight-bold">IN-STOCK</small>
+                                </span> -->
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                                background: rgb(46, 87, 211);
+                                border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4  col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+
+                            <!-- <img class="align-self-start" src="/static/assets/img/theme/amazon2-icon.png"
+                        style="width: fit-content; height: 16px;" alt="amazon-icon"> -->
+                            <img class="align-self-start" src="/static/assets/img/theme/flipkart2-icon.png"
+                                style="width: auto; height: 18px;" alt="flipkart-icon">
+
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small><i class="ni ni-curved-next"></i></small>
+                            <!-- <small class="ml-2"><i class="ni ni-favourite-28"></i></small> -->
+                        </div>
+                    </div>
+
+                    <!-- Title Block -->
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <a href="#">
+                                <h5 class="card-title font-weight-bold mb-0">[Test1] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp for Reading, Working on PC, Laptop, Power
+                                    Bank, Bedroom
+                                    (Multicolour, Plastic, Pack of 1)
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-4 col-4 border">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+
+                                <img class="rounded align-items-center"
+                                    style="height: auto; width: 100%; object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/41BOKuqzdOL._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                                <!-- <img class="rounded align-self-start pt-1 pb-1" style="height: fit-content;width: 100%;object-fit: cover;"
+                                      src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg" alt="img"> -->
+                                <!-- <img class="rounded align-self-start pt-1 pb-1"
+                                      style="height: fit-content ;width: 100%;object-fit: cover;"
+                                      src="https://m.media-amazon.com/images/I/71bziZ6cBRL._AC_UY218_.jpg" alt="img"> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-8 border">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Current
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item py-1 px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-7 pr-0">
+                                            <div
+                                                class="text-muted font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                Previous
+                                                Price</div>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <div
+                                                class="text-dark font-weight-bold heading-small px-0 pt-0 custom-text-small-m">
+                                                ₹21,99,999
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item py-2 text-center">
+                                    <a href=" #"
+                                        class="btn btn-secondary btn-outline-secondary custom-btn w-90 px-2 py-1 border">Price
+                                        History >></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="row rounded mt-3">
+                        <div class="col text-left">
+                          <ul class="list-group">
+                            <li class="list-group-item p-2">
+                              <div class="row">
+                                <div class="col-6 text-success font-weight-bold text-center heading-small">Lowest Price</div>
+                                <div class="col-6 text-danger font-weight-bold text-center heading-small">Highest Price</div>
+                                <div class="col-6 text-dark font-weight-bold text-center heading-small">₹4,599</div>
+                                <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999</div>
+                              </div>
+                          </ul>
+                        </div>
+                      </div> -->
+
+                    <div class="row mt-2">
+                        <div class="col text-left">
+                            <!-- <a href="#" class="btn btn-success" style="
+                            background: #FFA41C;
+                            border-color: #FF8F00;">Buy Now</a> -->
+                            <div class="d-flex flex-column">
+                                <span class="badge badge-dot d-block">
+                                    <i class="bg-danger"></i>
+                                    <small class="status font-weight-bold custom-date-text">Out of Stock</small>
+                                </span>
+                                <a href="#" class="btn btn-success custom-btn" style="
+                                    background: green;
+                                    border-color: rgb(1, 108, 1);">Buy Now</a>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="d-flex flex-column">
+                                <!-- <span class="badge badge-dot d-block">
+                                      <i class="bg-success"></i>
+                                      <small class="status font-weight-bold">IN-STOCK</small>
+                                    </span> -->
+                                <span class="badge badge-dot d-block">
+                                    <small class="font-weight-bold text-muted custom-date-text">Last updated: 2 hrs
+                                        ago</small>
+                                </span>
+                                <!-- <a href="#" class="btn btn-danger btn-primary custom-btn btn-danger" style="
+                                    background: rgb(46, 87, 211);
+                                    border-color: royalblue;">Stop Tracking</a> -->
+                                <a href="#" class="btn btn-warning custom-btn">Stop Tracking</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Hardcode Data Ends -->
+        <!-- Hardcode Data Starts  -->
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+                            <h6 class="heading-small text-muted mb-4 d-inline">Merchant: Amazon</h6>
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small>2 hrs ago</small>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-10 col-7">
+                            <a>
+                                <h5 class="card-title font-weight-bold mb-0">[Test] SWING GEARS Portable Flexible
+                                    Adjustable Eye
+                                    Protection USB LED Desk Light Table Lamp for Reading, Working on PC,
+                                    Laptop, Power Bank, Bedroom (Multicolour, Plastic, Pack of 1)</h5>
+
+                            </a>
+                            <span class="h2 text-dark font-weight-bold mb-0">₹4,999</span>
+
+                            <span class="h5 font-weight-bold text-muted mb-0">MRP: ₹7,999</span>
+                            <br>
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-success"></i>
+                                <small class="status font-weight-bold">IN-STOCK</small>
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-5">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+                                <img class="rounded align-self-start" style="height: 1;width: 100%;object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/41BOKuqzdOL._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row rounded mt-3">
+                        <div class="col text-left">
+                            <ul class="list-group">
+                                <li class="list-group-item p-2">
+                                    <div class="row">
+                                        <div class="col-6 text-danger font-weight-bold text-center heading-small">
+                                            Highest Price</div>
+                                        <div class="col-6 text-success font-weight-bold text-center heading-small">
+                                            Lowest Price</div>
+                                        <div class="col-6 text-dark font-weight-bold text-center heading-small">₹7,999
+                                        </div>
+                                        <div class="col-6 text-dark font-weight-bold text-center heading-small">₹4,599
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col text-left">
+                            <a href="#" class="btn btn-success" style="
+    background: #FFA41C;
+    border-color: #FF8F00;">Buy Now</a>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-outline-primary">Track</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-9 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+                            <h6 class="heading-small text-muted mb-4 d-inline">Merchant: Amazon</h6>
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small>2 hrs ago</small>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-10 col-7">
+                            <a>
+                                <h5 class="card-title font-weight-bold mb-0">[Test] Apple iPhone 12 (256GB) - Black</h5>
+
+                            </a>
+                            <span class="h2 text-dark font-weight-bold mb-0">₹54,999</span>
+
+                            <span class="h5 text-success font-weight-bold text-muted mb-0">MRP: ₹57,999</span>
+                            <br>
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-success"></i>
+                                <small class="status font-weight-bold">IN-STOCK</small>
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-5">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+                                <img class="rounded align-self-start" style="height: 1;width: 100%;object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/71hIfcIPyxS._SX522_.jpg" alt="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <span class="h4 text-success font-weight-bold mb-0">Current Price: ₹4,999</span>
+          
+          <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: ₹7,999</span> -->
+
+                    <!-- <p class="mt-3 mb-0 text-sm">
+            <span class="text-primary mr-2">Last tracked :
+              <span class="text-nowrap text-success">a day ago</span><br></span>
+          </p> -->
+
+                    <div class="row">
+                        <div class="col text-left">
+                            <a href="#" class="btn btn-success">Buy Now</a>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-danger">Stop Tracking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-9 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-left text-muted">
+                            <h6 class="heading-small text-muted mb-4 d-inline">Merchant: Amazon</h6>
+                        </div>
+                        <div class="col text-right text-muted">
+                            <small>2 hrs ago</small>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="col-xl-10 col-7">
+                            <a>
+                                <h5 class="card-title font-weight-bold mb-0">[Test] boAt Rockerz 255 Pro+ Bluetooth in
+                                    Ear Earphones
+                                    with Upto 40 Hours Playback, ASAP Charge, IPX7, Dual Pairing and
+                                    Bluetooth v5.0(Active Black)</h5>
+
+                            </a>
+                            <span class="h2 text-dark font-weight-bold mb-0">₹4,999</span>
+
+                            <span class="h5 text-success font-weight-bold text-muted mb-0">MRP: ₹7,999</span>
+                            <br>
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-success"></i>
+                                <small class="status font-weight-bold">IN-STOCK</small>
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-5">
+                            <div class="d-flex justify-content-center align-items-center my-auto" style="height: 100%;">
+                                <img class="rounded align-self-start" style="height: 1;width: 100%;object-fit: cover;"
+                                    src="https://m.media-amazon.com/images/I/51e80MOTQ8L._AC_UY327_FMwebp_QL65_.jpg"
+                                    alt="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <span class="h4 text-success font-weight-bold mb-0">Current Price: ₹4,999</span>
+              
+              <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: ₹7,999</span> -->
+
+                    <!-- <p class="mt-3 mb-0 text-sm">
+                <span class="text-primary mr-2">Last tracked :
+                  <span class="text-nowrap text-success">a day ago</span><br></span>
+              </p> -->
+
+                    <div class="row">
+                        <div class="col text-left">
+                            <a href="#" class="btn btn-success">Buy Now</a>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-danger">Stop Tracking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Hardcode Data Ends -->
+
+        <!-- Hardcode Data starts -->
+
+        <div class="col-xl-12 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <!-- <div class="row">
+            <div class="col">
+              <h3 class="card-title font-weight-bold mb-0">Title</h3>
+            </div>
+            <div class="col-auto">
+              <div>
+                <a href="" class="btn btn-sm btn-primary">See more</a>
+              </div>
+              <a href="#" class="avatar mr-3">
+                <img alt="Image placeholder"
+                  src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg">
+              </a>
+            </div>
+          </div> -->
+                    <div class="row">
+                        <div class="col">
+                            <a>
+                                <h3 class="card-title font-weight-bold mb-0">[Test] Get Fresh Inshell Walnuts (1000gm)
+                                    Premium Quality
+                                    Walnuts (1000 g) Get Fresh Inshell Walnuts (1000gm) Premium Quality Walnuts (1000 g)
+                                </h3>
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <div>
+                                <a href="#" id="product-url" class="btn btn-sm btn-primary">See
+                                    more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="h4 text-success font-weight-bold mb-0">Current Price: ₹4,999</span>
+                    <span>
+                        <a href="#" class="btn btn-sm btn-primary" id="submit-button">refresh</a>
+                        <span id="loading-animation" class="hidden">
+                            <span id="loading"></span>
+                        </span>
+                    </span><br>
+                    <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: ₹7,999</span>
+
+                    <p class="mt-3 mb-0 text-sm">
+                        <span class="text-primary mr-2">Last tracked :
+                            <span class="text-nowrap text-success">a day ago</span><br></span>
+                    </p>
+
+                    <div class="row">
+                        <div class="col text-left">
+                            <a href="#" class="btn btn-success">Buy Now</a>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-danger">Stop Tracking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hardcode Data Ends -->
+
+        {% for product in data %}
+        <div class="col-xl-12 col-md-6">
+            <div class="card card-stats">
+
+                <!-- <img src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" class="card-img-top img-fluid" alt="..."> -->
+                <!-- <div class="embed-responsive embed-responsive-16by9">
+            <img alt="Card image cap" class="card-img-top embed-responsive-item" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" />
+         </div> -->
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- <div class="row">
+              
+              <div class="col">    
+                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>                       
+              </div>
+
+              <div class="col-auto">               
+                <div>
+                  <a href="/product/{{product.tracking_id}}" class="btn btn-sm btn-primary">See more</a>
+                </div>
+                
+                  <a href="#" class="avatar mr-3">
+                  <img alt="Image placeholder" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg">
+                  </a>             
+              </div>
+            </div> -->
+
+                    <div class="row">
+                        <div class="col">
+                            <a>
+                                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <div>
+                                <a href="/product?pid={{product.product_id}}" id="product-url"
+                                    class="btn btn-sm btn-primary">See
+                                    more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="h4 text-success font-weight-bold mb-0">Current Price: {{product.price}}</span>
+                    <span>
+                        <a href="#" class="btn btn-sm btn-primary" id="submit-button">refresh</a>
+                        <span id="loading-animation" class="hidden">
+                            <span id="loading"></span>
+                        </span>
+                    </span><br>
+                    <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price:
+                        {{product.initPrice}}</span>
+
+                    <p class="mt-3 mb-0 text-sm">
+                        <span class="text-primary mr-2">Last tracked :
+                            <span class="text-nowrap text-success">a day ago</span><br></span>
+                    </p>
+
+                    <div class="row">
+                        <div class="col text-left">
+                            <a href="{{product.url}}" class="btn btn-success">Buy Now</a>
+                        </div>
+                        <div class="col text-right">
+                            <a href="https://t.me/HR_ID_2_Bot" class="btn btn-danger">Stop Tracking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+    {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script>
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const productCards = document.querySelectorAll('.card-body');
+
+        productCards.forEach(card => {
+            console.log("<- No of Products")
+            var refresh_button = card.querySelector("#submit-button")
+            var loadingAnimation = card.querySelector("#loading-animation")
+            refresh_button.addEventListener('click', function (event) {
+                event.preventDefault();
+                refresh_button.style.display = "none";
+                loadingAnimation.style.display = "block";
+
+                var productUrl = card.querySelector("#product-url").getAttribute('href');
+                console.log(productUrl);
+            });
+
+            // card.addEventListener('click', function(){
+            //   console.log("refresh clicked")
+            //   var url = card.querySelector("#product-url").getAttribute('href');
+            //   console.log(url);
+
+
+            // });
+
+            //   function submitForm(){
+            //   console.log("refresh clicked")
+            //   var url = document.getElementById("product-url").getAttribute("href");
+            //   console.log(url);
+
+            //   // $.ajax({
+            //   //   type: "POST",
+            //   //   url: "/productprice",  // Replace with the actual URL of your view
+            //   //   data: {
+            //   //       input_value: url
+            //   //   },
+            //   //   success: function(response) {   
+            //   //     console.log(response);       
+            //   //     console.log("success");
+            //   //   },
+            //   //   error: function() {
+            //   //       console.log("error");
+            //   //   }
+            //   // });
+
+            // }
+
+            // card.addEventListener('click', function() {
+            //     const productId = card.id.split('-')[2]; // Extract product ID from card's ID
+            //     fetch(`/get_product_details/${productId}`)
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             // Update your details element to display the fetched product details
+            //             const detailsElement = document.getElementById('product-details');
+            //             detailsElement.innerHTML = `
+            //                 <h2>${data.name}</h2>
+            //                 <p>${data.description}</p>
+            //                 <p>Price: $${data.price}</p>
+            //                 <!-- Add more details as needed -->
+            //             `;
+            //         });
+            // });
+
+
+        });
+    });
+
+</script>
+
+{% endblock javascripts %}

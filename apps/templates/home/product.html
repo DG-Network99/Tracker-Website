@@ -4,97 +4,418 @@
 
 {% block content %}
 
-  <div class="header bg-primary pb-6">
-    <div class="container-fluid">
-      <div class="header-body">
-        <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Product Info</h6>
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Product Info</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Product Info</li>
-              </ol>
-            </nav>
-          </div>
-          <div class="col-lg-6 col-5 text-right">
-            <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
-            <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
-          </div>
+<div class="header bg-primary-color pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Product Info</h6>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- Page content -->
-  <div class="container-fluid mt--6">
-    <div class="row">
-      {% if product %}
-      <div class="col-xl-12 col-md-6">
-        <div class="card card-stats">    
+</div>
 
-          <!-- <img src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" class="card-img-top img-fluid" alt="..."> -->
-          <!-- <div class="embed-responsive embed-responsive-16by9">
-            <img alt="Card image cap" class="card-img-top embed-responsive-item" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg" />
-         </div> -->
-          <!-- Card body -->
-          <div class="card-body">
-            <!-- <div class="row">
-              
-              <div class="col">    
-                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>                       
-              </div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
 
-              <div class="col-auto">               
-                <div>
-                  <a href="/product/{{product.tracking_id}}" class="btn btn-sm btn-primary">See more</a>
-                </div>
-                
-                  <a href="#" class="avatar mr-3">
-                  <img alt="Image placeholder" src="https://m.media-amazon.com/images/I/61u1VALn6JL._AC_UF1000,1000_QL80_FMwebp_.jpg">
-                  </a>
-                
-              </div>
-    
-            </div> -->
-            <div class="row">            
-              <div class="col">
-                <h3 class="card-title font-weight-bold mb-0">{{product.title}}</h3>
-              </div>
-              <div class="col-auto">               
-                <div>
-                  <a href="/product?pid={{product.tracking_id}}" class="btn btn-sm btn-primary">See more</a>
-                </div>
-              </div>
+    <div class="col-md-6">
+      <div class="card card-stats">
+        <!-- Card body -->
+        {% if product %}
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <a href="{{product.link}}" id="product-url">
+                <h3 class="card-title text-dark font-weight-bold mb-0">{{product.title}}</h3>
+              </a>
+              {% if product.price != '' %}
+              <span class="text-muted font-weight-bold mb-0">Price: {{product.price}}</span><br><br>
+              {% else %}
+              <span class="text-warning font-weight-bold mb-0">Out of Stock</span><br><br>
+              {% endif %}
+
+
+              <!-- <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: {{data.initPrice}}</span> -->
             </div>
-            
-            <span class="h4 text-success font-weight-bold mb-0">Current Price: {{product.price}}</span><br>
-            <span class="h5 text-success font-weight-bold text-muted mb-0">Previous Price: {{product.initPrice}}</span>
-            <p class="mt-3 mb-0 text-sm">
-            <span class="text-primary mr-2">Last tracked :
-            <span class="text-nowrap text-success">a day ago</span><br></span>
-            </p>
-              
-            <div class="row">
-              <div class="col text-left">
-                <a href="{{product.url}}" class="btn btn-success">Buy Now</a>
-              </div>
-              <div class="col text-right">
-                <a href="https://t.me/HR_ID_2_Bot" class="btn btn-danger">Stop Tracking</a>
+            <div class="col-auto">
+              <div class="icon mt-3">
+                {% if product.image %}
+                <a href="{{product.link}}" class="avatar mr-3">
+                  <img alt="Image placeholder" src="{{product.image}}">
+                </a>
+                {% else %}
+                <a href="{{product.link}}" class="avatar rounded-circle mr-3">
+                  {% if product.merchant == "flipkart" %}
+                  <img alt="Image placeholder"
+                    src="https://w7.pngwing.com/pngs/5/879/png-transparent-flipkart-e-commerce-vu-televisions-sales-gmail-logo-blue-text-public-relations-thumbnail.png">
+                  {% elif product.merchant == "amazon" %}
+                  <img alt="Image placeholder"
+                    src="https://cdn.icon-icons.com/icons2/1195/PNG/512/1490889698-amazon_82521.png">
+                  {% else %}
+                  <img alt="Image placeholder"
+                    src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
+                  {% endif %}
+                  {% endif %}
+                </a>
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col text-left">
+              <a href="{{product.link}}" class="btn btn-success">Buy Now</a>
+            </div>
+            <div class="col text-right">
+              <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseStopTrack"
+                aria-expanded="false" aria-controls="collapseStopTrack">
+                Stop Track
+              </button>
+            </div>
+            <div class="collapse mt-2 mx-3" id="collapseStopTrack" style="width: 100%;">
+              <div class="card card-body float-right h5 mb-0" style="max-width: 280px; background-color: rgb(170, 255, 255);">
+                Are you sure you want to stop tracking this product?
+                <button id="untrack-button" onclick="stopTrack()" class="btn btn-danger text-white custom-btn mt-2">
+                  <i class="fa fa-spinner fa-pulse fa-fw" id="stop-tracking-spinner" style="display: none;"></i>
+                  Stop Tracking
+                </button>
+              </div>
+            </div>
+            <div class="mt-2 mx-3" id="alert-container" style="width: 100%;">
+            </div>
+          </div>
+          <h5 class="card-title font-weight-bold text-muted mb-0">Product Overview</h5>
+          <div class="mt-1">
+            <div class="row">
+              <div class="d-flex justify-content-between" style="width: 100%;">
+                <div class="d-flex flex-row align-items-center">
+                  <div class="icon ml-3">
+                    <a href="#" class="avatar rounded-circle">
+                      {% if product.merchant == "flipkart" %}
+                      <img
+                        src="https://w7.pngwing.com/pngs/5/879/png-transparent-flipkart-e-commerce-vu-televisions-sales-gmail-logo-blue-text-public-relations-thumbnail.png">
+                      {% elif product.merchant == "amazon" %}
+                      <img src="https://cdn.icon-icons.com/icons2/1195/PNG/512/1490889698-amazon_82521.png">
+                      {% else %}
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Shopping-cart-icon-with-bags-white-background.png">
+                      {% endif %}
+                    </a>
+                  </div>
+                  <div class="c-details ml-1">
+                    {% if product.price_history %}
+                    <h6 class="mb-0">TRACKING STARTED FROM</h6>
+                    <span>
+                      {% with first_price=product.price_history|first %}
+                      {{ first_price.x }}
+                      {% endwith %}
+                    </span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col text-right">
+                  <button id="shareBtn" class="btn btn-primary-color text-white">Share</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="mt-2">
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Product Info</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Merchant</th>
+                    <td class="text-uppercase">{{product.merchant}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Availability</th>
+                    <td>
+                      {% if product.availability == "In Stock" %}
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-success"></i>
+                        <span class="text-dark">In Stock</span>
+                      </span>
+                      {% elif product.availability == "Out of Stock" %}
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-danger"></i>
+                        <span class="text-dark">Out of Stock</span>
+                      </span>
+                      {% else %}
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i>
+                        <span class="text-dark">Unknown</span>
+                      </span>
+                      {% endif %}
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"> Last Updated</th>
+                    <td class="text">3 hours ago</td>
+                  </tr>
+                </tbody>
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Price Info</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Current Price</th>
+                    {% if product.price != "" %}
+                    <td>{{product.price}}</td>
+                    {% else %}
+                    <td>Not Available</td>
+                    {% endif %}
+                  </tr>
+                  {% if product.initPrice != "" %}
+                  <tr>
+                    <th scope="row">Previous Price</th>
+                    <td>{{product.initPrice}}</td>
+                  </tr>
+                  {% endif %}
+                  {% if product.highest_price %}
+                  <tr>
+                    <th scope="row">Highest Price</th>
+                    <td>₹{{product.highest_price}}</td>
+                  </tr>
+                  {% endif %}
+                  {% if product.lowest_price %}
+                  <tr>
+                    <th scope="row">Lowest Price</th>
+                    <td>₹{{product.lowest_price}}</td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if product.price_history %}
+    <!-- Card chart for Price History -->
+    <div class="col-md-6">
+      <div class="card bg-default">
+        <div class="card-header bg-transparent">
+          <div class="row align-Sitems-center">
+            <div class="col">
+              <h6 class="text-uppercase text-light ls-1 mb-1">Performance</h6>
+              <h5 class="h3 text-white mb-0">Price History</h5>
+            </div>
+            <div class="col">
+              <ul class="nav nav-pills justify-content-end">
+                <li class="nav-item mr-2 mr-md-0" data-toggle="chart1" data-target="#myHistoryChart"
+                  data-update='{"data":{"datasets":[{"data":[350, 430, 250, 600, 450, 450]}]}}' data-prefix="$"
+                  data-suffix="k">
+                  <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                    <span class="d-none d-md-block">Month</span>
+                    <span class="d-md-none">M</span>
+                  </a>
+                </li>
+                <li class="nav-item" data-toggle="chart1" data-target="#myHistoryChart"
+                  data-update='{"data":{"datasets":[{"data":[230,350, 430, 250, 600, 450]}]}}' data-prefix="$"
+                  data-suffix="k">
+                  <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                    <span class="d-none d-md-block">Week</span>
+                    <span class="d-md-none">W</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Chart -->
+          <div class="chart1">
+            <canvas id="myHistoryChart" style="width: 100%;"></canvas>
+          </div>
         </div>
       </div>
-      {% endif %}
-    </div>  
-
-    {% include "includes/footer.html" %}
+    </div>
+    {% endif %}
 
   </div>
 
+  {% include "includes/footer.html" %}
+
+</div>
+
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<!-- Chart JS -->
+<script>
+  const ctx = document.getElementById('myHistoryChart');
+  var price = JSON.parse('{{price_history_json | safe}}');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        data: price,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        borderColor: '#0080ff',
+        borderWidth: 1,
+        cubicInterpolationMode: 'monotone',
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointHoverBorderWidth: 3,
+        pointBackgroundColor: '#0080ff',
+        pointHoverBorderColor: 'rgba(0, 128, 255, 0.25)',
+      }],
+    },
+    options: {
+      responsive: true,
+
+      interaction: {
+        intersect: false,
+        mode: 'index',
+      },
+
+      plugins: {
+        legend: {
+          display: false
+        },
+      },
+
+      scales: {
+        x: {
+          type: 'time',
+          grid: { display: true },
+          ticks: { maxTicksLimit: 8 },
+          title: {
+            display: true,
+            text: "Roll over the chart for price information",
+          },
+        },
+        y: {
+          grid: { display: false },
+          beginAtZero: false,
+          ticks: {
+            maxTicksLimit: 8,
+            callback: function (value, index, values) {
+              return '₹' + value;
+            },
+          }
+        },
+
+      }
+    },
+
+    plugins: [{
+      afterDraw: chart => {
+        if (chart.tooltip?._active?.length) {
+          let x = chart.tooltip._active[0].element.x;
+          let yAxis = chart.scales.y;
+          let ctx = chart.ctx;
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x, yAxis.top);
+          ctx.lineTo(x, yAxis.bottom);
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = '#ff0000';
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }],
+
+
+  });
+</script>
+
+<!-- Share Button -->
+<script>
+  document.querySelector('#shareBtn')
+    .addEventListener('click', event => {
+      // Fallback, Tries to use API only
+      // if navigator.share function is
+      // available
+      if (navigator.share) {
+        navigator.share({
+          title: 'Price Tracker',
+          url: window.location.href
+        }).then(() => {
+          console.log('Thanks for sharing!');
+        }).catch(err => {
+          console.log(
+            "Error while sharing Page:");
+          console.log(err);
+        });
+      } else {
+        alert("Browser doesn't support sharing!");
+      }
+    })
+</script>
+
+<!-- Stop Tracking -->
+
+<script>
+  function stopTrack() {
+    console.log("stop track request")
+    var alertContainer = document.getElementById("alert-container");
+    var stopTrackingSpinner = document.getElementById("stop-tracking-spinner");
+    stopTrackingSpinner.style.display = "inline-block";
+
+    var productUrl = $('#product-url').attr('href');;
+    console.log(productUrl);
+
+    $.ajax({
+      type: "POST",
+
+      url: "/stop_track",
+
+      data: {
+        productUrl: productUrl,
+        csrfmiddlewaretoken: "{{ csrf_token }}"
+      },
+
+      success: function (response) {
+        console.log("success")
+        console.log(response)
+        stopTrackingSpinner.style.display = "none";
+        alertContainer.innerHTML = '<div class="alert alert-danger" role = "alert">Tracking for this product stopped successfully!</div>';
+
+        setTimeout(function () {
+          window.location.href = '/products';
+        }, 2000);
+      },
+
+      error: function (xhr, textStatus, errorThrown) {
+        if (xhr.status === 403) {
+          window.location.href = '/login/';
+        } else {
+          alert("Error: " + errorThrown);
+        }
+      }
+
+    });
+
+  }
+</script>
+
+{% endblock javascripts %}
