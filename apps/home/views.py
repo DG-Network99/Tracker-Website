@@ -74,21 +74,32 @@ def notification_update(request):
     if request.method == "POST":
         post_data = json.loads(request.body.decode('utf-8'))
         print("Post data ", post_data)
-        res = asyncio.run(manage_users({"products.product_link": post_data.get('productUrl', None)}, 'read'))
-        print("res is ", res)
-        if res:
-            for user in res:
-                data = {
-                    "user_email": user['user_email'],
-                    "product_id": post_data["productId"],
-                    "product_link": post_data["productUrl"],
-                    "previous_price": post_data["previousPrice"],
-                    "current_price": post_data["price"],
-                    "availability": post_data["availability"],
-                    "change": "increase",
-                    "is_read": False,
-                    }
-                result = asyncio.run(manage_notifications(data, "create")) # creating notification for each users
+        product_url = post_data.get('productUrl', None)
+        if product_url:
+            res = asyncio.run(manage_users({
+                'query': {"products.product_link": product_url}, 
+                'projection': {'_id': 0, "user_email":1, "products.$": 1}}, 
+                'projection_read'))
+            print("res is ", res)
+            if res:
+                for user in res:
+                    try:
+                        if user['products'][0]['is_tracking'] == True:
+                            data = {
+                                "user_email": user['user_email'],
+                                "product_id": post_data["productId"],
+                                "product_link": post_data["productUrl"],
+                                "previous_price": post_data["previousPrice"],
+                                "current_price": post_data["price"],
+                                "availability": post_data["availability"],
+                                "change": post_data["change"],
+                                "percentage": post_data["percentage"],
+                                "is_read": False,
+                                # any add or remove in keys, please update manage_notifications's 'create' action also in the mongo_db.py file
+                                }
+                            result = asyncio.run(manage_notifications(data, "create")) # creating notification for each users
+                    except:
+                        print("Problem in getting user['products'][0]['is_tracking']. Check notification_update function")        
 
         return HttpResponse("Got the post request")
     else:

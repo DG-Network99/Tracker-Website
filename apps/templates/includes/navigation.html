@@ -80,10 +80,13 @@
                       <i class="fa {% if prod.change == 'increased' %}bg-warning{% else %}bg-success{% endif %}"></i>
                         <span class="status">Price has been {{prod.change}} by {{prod.percentage}}%</span>
                       </span> -->
-
+                      {% if prod.change == 'increased' or prod.change == 'decreased' %}
                       <i
                         class="{% if prod.change == 'increased' %}text-warning fa fa-arrow-up{% else %}text-success fa fa-arrow-down{% endif %}"></i>
-                      <span class="status">Price has been {{prod.change}} by {{prod.percentage}}%</span>
+                      <span class="status">Price has been <strong>{{prod.change}}</strong> by {{prod.percentage}}%</span>
+                      {% else %}
+                      <span class="status">Product is currently <strong>'{{prod.change}}'</strong></span>
+                      {% endif %}
 
                     </p>
                   </div>

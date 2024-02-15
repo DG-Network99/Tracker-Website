@@ -33,11 +33,9 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '195.35.20.195', config('SERVER', def
 # CSRF_TRUSTED_ORIGINS = ['https://fascinating-olive-offering-sprint.trycloudflare.com']
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', SERVER_URL , TEMP_SITE.split("//")[1], TEMP_SITE, config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', SERVER_URL, TEMP_SITE.split("//")[1], TEMP_SITE, config('SERVER', default='127.0.0.1')]
 
 CSRF_TRUSTED_ORIGINS = [SERVER_URL, TEMP_SITE]
-
-
 
 # Application definition
 
@@ -83,7 +81,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -141,10 +138,16 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
-# set to true if you want email notification in console
-SET_LOCAL_EMAIL_BACKEND = os.environ['SET_LOCAL_EMAIL_BACKEND']
-if SET_LOCAL_EMAIL_BACKEND:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'contact@support.pricetrackerweb.com'
+
+# set to if you want email notification
+EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_USE_SSL = os.environ['EMAIL_USE_SSL']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+
 
 #############################################################
 #############################################################

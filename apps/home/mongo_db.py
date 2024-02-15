@@ -214,6 +214,10 @@ async def manage_users(data, action):
             result = list(users.find(data))
             return result
         
+        elif action =="projection_read":
+            result = list(users.find(data['query'], projection = data.get('projection', {'_id':0})))
+            return result
+
         elif action == "update_primaries":
 
             result = users.update_one(
@@ -382,12 +386,14 @@ async def manage_notifications(data, action):
                         "notifications":
                         {
                             "notification_id": str(uuid.uuid4()),
+                            "product_id": data["product_id"],
                             "product_link": data["product_link"],
                             "previous_price": data["previous_price"],
                             "current_price": data["current_price"],
                             "availability": data["availability"],
                             "is_read": data["is_read"],
                             "change": data["change"],
+                            "percentage": data["percentage"],
                             "current_date": isoformat
                         }
                     },
@@ -696,9 +702,9 @@ def get_product_info(user_email, product_id, notification_id=None):
     if notification_id:
         try: 
             
-            query = {"user_email": user_email, "notification.notification_id": notification_id}
+            query = {"user_email": user_email, "notifications.notification_id": notification_id}
 
-            update_document = {"$set" : {"notification.$.is_read": "True"}}
+            update_document = {"$set" : {"notifications.$.is_read": "True"}}
 
             notify_col.update_one(query, update_document)
 
@@ -712,7 +718,7 @@ def get_product_info(user_email, product_id, notification_id=None):
         )
     
     products_list = is_product_available.get('products', None)
-    
+
     if products_list:
         found_product = next((product for product in products_list if product['product_id'] == product_id), None)
 
@@ -737,25 +743,30 @@ def get_product_info(user_email, product_id, notification_id=None):
 def get_all_notifications(user_email):
     notifications = notify_col.find_one({"user_email": user_email})
     all_records = []
+    print(notifications)
     if notifications != None:
-        for prod in notifications['notification']:
+        for prod in notifications['notifications']:
 
             # getting product details
-            for product in prod_col.find():       
-                if str(product['_id']) == str(prod['product_id']):      
-                    product_detail = {'url' : product['link'], 'title' : product['title'], 
-                        'price' : product['price'], 'initPrice' : product['initPrice'],
-                        'tracking_id' : product['users'][0]['tracking_id']
-                        }
-                
-            product_info = {'product_id' : prod['product_id'], "notification_id" : prod['notification_id'],
-                        'product_detail' : product_detail ,'change' : prod['change'], 
-                    'percentage' : prod['percentage'], 'previous_price' : prod['previous_price'],
-                    'current_price' : prod['current_price'], 'availability' : prod['availability'],
-                    'is_read' : prod['is_read']
-                    }
+            # for product in prod_col.find():
+            #     if str(product['link']) == str(prod['product_link']):      
+            #         product_detail = {'url' : product['link'], 'title' : product['title'], 
+            #             'price' : product['price'], 'initPrice' : product['initPrice'],
+            #             'tracking_id' : product['users'][0]['tracking_id']
+            #             }
+            product_details = prod_col.find_one({'link': prod['product_link']}, projection={'_id': 0, 'priceHistory': 0, 'usersCount': 0})
+
+            # product_info = {'product_id' : prod['product_id'], "notification_id" : prod['notification_id'],
+            #         'product_detail' : product_details ,'change' : prod['change'], 
+            #         'percentage' : prod['percentage'], 'previous_price' : prod['previous_price'],
+            #         'current_price' : prod['current_price'], 'availability' : prod['availability'],
+            #         'is_read' : prod['is_read']
+            #         }
+
+            product_info = prod
+            product_info['product_detail'] = product_details
             all_records.append(product_info)
-    return all_records    
+    return all_records
 
 def get_user_details(user_email):
     user_data = asyncio.run(manage_users({'user_email': user_email}, 'read'))
