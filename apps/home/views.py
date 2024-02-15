@@ -266,7 +266,6 @@ def pages(request):
         if load_template == 'notifications':
             try:
                 data = get_all_notifications(request.user.email)
-                print(data)
 
             except Exception as e:
                 print(e)    
