@@ -220,13 +220,14 @@ def pages(request):
 
             if response or data==[]:
 
-                # print("Data from local db", data)
-
                 context = {'segment': load_template, 'data': data}
 
                 page = 'home/' + load_template+".html"
 
-                return render(request, page, {"data":data})
+                html_template = loader.get_template('home/products.html')
+
+                # return render(request, page, context)
+                return HttpResponse(html_template.render(context, request))
             
             else:
                 html_template = loader.get_template('home/page-500.html')
@@ -248,6 +249,8 @@ def pages(request):
                     data = get_product_info(request.user.email, request.GET['pid'])
                     
                 if not data:
+                    print("product not found")
+
                     html_template = loader.get_template('home/page-404.html')
 
                     return HttpResponse(html_template.render(context, request))
