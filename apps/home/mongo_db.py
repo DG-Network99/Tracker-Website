@@ -704,7 +704,7 @@ def get_product_info(user_email, product_id, notification_id=None):
             
             query = {"user_email": user_email, "notifications.notification_id": notification_id}
 
-            update_document = {"$set" : {"notifications.$.is_read": "True"}}
+            update_document = {"$set" : {"notifications.$.is_read": True}}
 
             notify_col.update_one(query, update_document)
 

@@ -5,6 +5,7 @@ def header_notifications(request):
         data = get_all_notifications(request.user.email)
         # print(data)
         last_five_notifications = data[-5:]
-        return {'notifications': last_five_notifications[::-1]}
+        new_notification_count = sum(1 for item in last_five_notifications if item.get('is_read') == False) 
+        return {'notifications': last_five_notifications[::-1], 'new_notification_count': new_notification_count}
     else:
         return {'notifications': None}

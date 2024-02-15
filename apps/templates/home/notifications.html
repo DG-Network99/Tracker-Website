@@ -34,12 +34,12 @@
       <div class="row align-items-center">
         <div class="col-auto">
           <!-- Avatar -->
-          <img alt="Image placeholder" src="https://m.media-amazon.com/images/I/71hIfcIPyxS._SX522_.jpg" class="avatar">
+          <img alt="Image placeholder" src="{{prod.product_detail.image}}" class="avatar">
         </div>
         <div class="col ml--2">
           <div class="d-flex justify-content-between align-items-center" style="height: 100%;">
             <div style="width: 50vw;">
-              <h4 class="mb-0 text-sm {% if prod.is_read == 'True' %}text-muted{% else %}text-dark{% endif %}"
+              <h4 class="mb-0 text-sm {% if prod.is_read %}text-muted{% else %}text-dark{% endif %}"
                 style="font-size: 0.74rem !important;">
                 {{prod.product_detail.title|truncatechars:60}}</h4>
             </div>
