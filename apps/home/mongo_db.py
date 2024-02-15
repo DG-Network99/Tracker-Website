@@ -532,7 +532,7 @@ def track_product(user_email, product_url):
                 # Remove excluded fields from the product_data
                 product_data_filtered = {key: value for key, value in product_data.items() if key not in fields_to_exclude}
                 
-                print(product_data_filtered)
+                # print(product_data_filtered)
 
                 add_product_result = manage_productbase(
                     {'link': product_data_filtered['link'], 
@@ -590,7 +590,7 @@ def stop_tracking(user_email, product_url):
                     # Remove excluded fields from the product_data
                     product_data_filtered = {key: value for key, value in product_data.items() if key in fields_to_include}
                     
-                    print(product_data_filtered)
+                    # print(product_data_filtered)
 
                     result = prod_col.update_one(
                         {'link': product_url},
@@ -743,7 +743,7 @@ def get_product_info(user_email, product_id, notification_id=None):
 def get_all_notifications(user_email):
     notifications = notify_col.find_one({"user_email": user_email})
     all_records = []
-    print(notifications)
+
     if notifications != None:
         for prod in notifications['notifications']:
 
