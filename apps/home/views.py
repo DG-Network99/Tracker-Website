@@ -17,8 +17,10 @@ from .mongo_db import get_user_details, update_user_details
 from .utility import product_common_url
 import datetime
 import time
+from bson import ObjectId
 
 # @login_required(login_url="/login/")
+@csrf_exempt
 def index(request):
 
     if request.method == "POST" and request.POST['search'] is not None:
@@ -42,25 +44,33 @@ def index(request):
         data, response = search_product(product_url)
         
         print ("RESPONSE :",response)
-
+        
+        formatted_data = {}
+        
         if data:
             print({"msg": "Product Fetched","URL":data["link"],"Product ID":data["productId"]})
-            print(data)
+            
+            # remove mongodb object id to avoid any error
+            del data['_id']
+
             price_history_json = json.dumps(data['price_history'])
+
         else:
             data={"msg" : "error"}
             price_history_json ={}
 
         context = {'segment': 'index', 'data': data, "price_history_json": price_history_json}
 
-        print(data)
+        request.session['context'] = context
+
+        return HttpResponseRedirect(reverse('main_dashboard')) # Redirect to main_dashboard view to avoid form resubmission issue in frontend
 
         # html_template = loader.get_template('home/index.html')
         # return HttpResponse(html_template.render(context, request))
         # return JsonResponse(context)
 
-        html_template = loader.get_template('home/index.html')
-        return HttpResponse(html_template.render(context, request))
+        # html_template = loader.get_template('home/index.html')
+        # return HttpResponse(html_template.render(context, request))
     
     else:
         context = {'segment': 'index'}
@@ -68,6 +78,15 @@ def index(request):
 
         html_template = loader.get_template('home/index.html')
         return HttpResponse(html_template.render(context, request))
+
+def main_dashboard(request):
+
+    data = request.session.pop('context', None)
+    
+    html_template = loader.get_template('home/index.html')
+
+    return HttpResponse(html_template.render(data, request))
+    
 
 @csrf_exempt
 def notification_update(request):
@@ -269,7 +288,7 @@ def pages(request):
 
             except Exception as e:
                 print(e)    
-            return render(request, 'home/notifications.html', {"data":data[::-1]})
+            return render(request, 'home/notifications.html', {'segment': 'notifications', "data":data[::-1]})
         
         if load_template == 'telegram':
             try:
@@ -319,7 +338,7 @@ def pages(request):
                 user_data = get_user_details(user_email)
                 user_phone = user_data.get("phone", None)
                 user_gender = user_data.get("gender", None)
-                user_primary_data = {"user_name": user_name, "user_phone": user_phone ,"user_gender": user_gender}
+                user_primary_data = {'segment': 'profile', "user_name": user_name, "user_phone": user_phone ,"user_gender": user_gender}
                 return user_primary_data
 
             if request.method == "POST":
@@ -381,6 +400,3 @@ def pages(request):
         print(e)
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
-    
-
-
