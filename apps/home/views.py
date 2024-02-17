@@ -18,6 +18,7 @@ from .utility import product_common_url
 import datetime
 import time
 from bson import ObjectId
+import csv
 
 # @login_required(login_url="/login/")
 @csrf_exempt
@@ -87,7 +88,6 @@ def main_dashboard(request):
 
     return HttpResponse(html_template.render(data, request))
     
-
 @csrf_exempt
 def notification_update(request):
     if request.method == "POST":
@@ -215,6 +215,37 @@ def stop_track(request):
         response = JsonResponse({"error": "need authentication"})
         response.status_code = 403
         return response
+
+@csrf_exempt
+def contact_us(request):
+    if request.method == 'POST':
+        
+        try:
+            email = request.POST.get('email', '')
+            subject = request.POST.get('subject', '')
+            message = request.POST.get('message', '')
+
+            # Write data to CSV file
+            with open('contact_data.csv', 'a', newline='') as csvfile:
+                fieldnames = ['Email', 'Subject', 'Message']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                if csvfile.tell() == 0:
+                    writer.writeheader()
+
+                writer.writerow({'Email': email, 'Subject': subject, 'Message': message})
+                messages.success(request, 'Message sent successfully.')
+
+        except Exception as e:
+            print(e)
+            messages.error(request, 'Something went wrong')
+        
+        return redirect(request.path)    
+    else:
+        return render(request, 'legal_pages/contact_us.html')
+
+def about_us(request):
+    return render(request, 'legal_pages/about_us.html')
 
 @login_required(login_url="login")
 def pages(request):
@@ -351,7 +382,7 @@ def pages(request):
                     db_query = {"gender": gender.lower() if gender else gender, "phone": phone_number}
                     update_db_response = update_user_details(user_email, db_query)
                     if update_db_response:
-                        messages.success(request, 'Your message has been submitted successfully.')
+                        messages.success(request, 'Your data has been updated successfully.')
                         # return redirect(request.path)
                         # return render(request, page, {**get_primary_data(), 'success_msg': 'Profile updated successfully'})
                     else:

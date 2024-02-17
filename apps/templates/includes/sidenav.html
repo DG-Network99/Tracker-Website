@@ -1,3 +1,12 @@
+{% block stylesheets %}
+<style>
+  .collapse .list-group-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+</style>
+{% endblock stylesheets %}
+
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
   <div class="scrollbar-inner">
 
@@ -56,6 +65,20 @@
               <i class="ni ni-single-02 text-yellow"></i>
               <span class="nav-link-text">Profile</span>
             </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#collapseExample" data-toggle="collapse" aria-expanded="false">
+              <i class="ni ni-bullet-list-67 text-primary"></i>
+              <span class="nav-link-text">Our Pages</span>
+            </a>
+            <div class="collapse ml-5" id="collapseExample">
+              <div class="list-group list-group-flush">
+                <a href="{% url 'about_us' %}" class="list-group-item list-group-item-action">About Us</a>
+                <a href="{% url 'contact_us' %}" class="list-group-item list-group-item-action">Contact Us</a>
+                <a href="#" class="list-group-item list-group-item-action">Privacy Policy</a>
+                <a href="#" class="list-group-item list-group-item-action">Terms and Conditions</a>
+              </div>
+            </div>
           </li>
 
           <!-- <li class="nav-item">

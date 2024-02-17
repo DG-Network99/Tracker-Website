@@ -1,0 +1,147 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Products {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    .mission-text {
+        margin-bottom: 30px;
+    }
+
+    .feature-list {
+        margin-bottom: 30px;
+    }
+
+    .feature-list li {
+        margin-bottom: 10px;
+    }
+
+    .why-choose-us {
+        margin-bottom: 30px;
+    }
+
+    .why-choose-us li {
+        margin-bottom: 10px;
+    }
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-3">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h3 text-primary-color d-inline-block mb-0">About us</h6>
+                    <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">My Products</a></li>
+              <li class="breadcrumb-item active" aria-current="page">My Products</li>
+            </ol>
+          </nav> -->
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <h2>About Us</h2>
+                <p class="mission-text">Welcome to <a href="{% url 'home' %}">PriceTrackerWeb</a>, your go-to destination for tracking product
+                    prices, monitoring
+                    stock availability, and discovering great deals on popular online platforms like Amazon, Flipkart,
+                    and Myntra.
+                    At <a href="{% url 'home' %}">PriceTrackerWeb</a>, we strive to make online shopping a seamless and rewarding experience for our
+                    users.</p>
+
+                <h3>Our Mission</h3>
+                <p class="mission-text">Our mission is to empower consumers with the tools and information they need to
+                    make
+                    informed purchasing decisions. We understand the importance of finding the best deals and ensuring
+                    product
+                    availability, which is why we've created a comprehensive platform that keeps you updated on price
+                    fluctuations,
+                    stock statuses, and special offers.</p>
+
+                <h3>What We Offer</h3>
+                <ul class="feature-list">
+                    <li><strong>Price Tracking:</strong> We monitor the prices of products across various online
+                        retailers,
+                        including Amazon, Flipkart, and Myntra. Our advanced tracking system notifies you instantly when
+                        prices drop
+                        or increase, helping you save money on your favorite products.</li>
+                    <li><strong>Stock Availability:</strong> Never miss out on a product again! We keep track of stock
+                        availability
+                        and notify you as soon as a product becomes available or goes out of stock. Say goodbye to
+                        disappointment
+                        when your desired item is suddenly unavailable.</li>
+                    <li><strong>Price History:</strong> Want to know how the price of a product has changed over time?
+                        Our price
+                        history feature provides you with detailed insights into past price fluctuations, allowing you
+                        to make
+                        informed decisions about when to buy.</li>
+                    <li><strong>Deal Recommendations:</strong> Discover the best deals and offers on Amazon and Flipkart
+                        with our
+                        deal recommendation system. We handpick the most attractive discounts and promotions, ensuring
+                        that you
+                        never miss out on a great deal.</li>
+                </ul>
+                <h3>How It Works</h3>
+                <ol class="feature-list">
+                    <li><strong>Track Products:</strong> Simply provide us with the product details, and we'll start
+                        tracking its price
+                        and availability across multiple online platforms.</li>
+                    <li><strong>Receive Notifications:</strong> Receive real-time notifications via email or SMS
+                        whenever there's a
+                        price drop, price increase, or change in stock status for your tracked products.</li>
+                    <li><strong>Explore Price History:</strong> Dive into the price history of your favorite products to
+                        understand
+                        pricing trends and make smarter purchasing decisions.</li>
+                    <li><strong>Discover Deals:</strong> Browse through our curated list of deals and offers to find
+                        incredible
+                        discounts on a wide range of products.</li>
+                </ol>
+
+                <h3>Why Choose Us?</h3>
+                <ul class="why-choose-us">
+                    <li><strong>Accuracy:</strong> Our tracking system is highly accurate, ensuring that you receive
+                        timely updates on
+                        price changes and stock availability.</li>
+                    <li><strong>Convenience:</strong> We make online shopping hassle-free by providing all the
+                        information you need in
+                        one place, saving you time and effort.</li>
+                    <li><strong>Transparency:</strong> We believe in transparency and honesty, which is why we strive to
+                        provide clear
+                        and comprehensive information to our users.</li>
+                    <li><strong>Customer Satisfaction:</strong> Your satisfaction is our top priority. We're committed
+                        to delivering
+                        exceptional service and helping you make the most of your online shopping experience.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include "includes/footer.html" %}
+    {% endblock content %}
+
+    <!-- Specific JS goes HERE -->
+    {% block javascripts %}
+
+    <script>
+    </script>
+
+    {% endblock javascripts %}
