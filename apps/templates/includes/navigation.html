@@ -68,10 +68,6 @@
                 </div>
               </a>
               {% endfor %}
-
-
-
-
             </div>
             <!-- View all -->
             <a href="/notifications" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
@@ -123,11 +119,10 @@
               <i class="ni ni-single-02"></i>
               <span>Login/Signup</span>
             </a>
-            <a target="_blank" href="#" class="dropdown-item">
+            <a target="_blank" href="{% url 'contact_us' %}" class="dropdown-item">
               <i class="ni ni-support-16"></i>
               <span>Support</span>
             </a>
-
             {% endif %}
           </div>
         </li>

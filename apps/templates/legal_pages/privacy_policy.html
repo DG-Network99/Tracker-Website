@@ -1,0 +1,150 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Products {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 50px;
+    }
+
+    h2,
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    ul,
+    ol {
+        margin-bottom: 15px;
+        padding-left: 20px;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-3">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h3 text-primary-color d-inline-block mb-0">About us</h6>
+                    <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">My Products</a></li>
+              <li class="breadcrumb-item active" aria-current="page">My Products</li>
+            </ol>
+          </nav> -->
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <h2>Privacy Policy</h2>
+                <p>Welcome to Price Tracker Web!</p>
+                <p>At Price Tracker Web, we are committed to protecting your privacy and ensuring the security of your personal
+                    information. This Privacy Policy outlines how we collect, use, and disclose your information when you use our
+                    price tracker website and related services.</p>
+            
+                <h3>Information We Collect</h3>
+                <ul>
+                    <li><strong>User Provided Information:</strong> We may collect personal information such as your name, email
+                        address, and preferences when you register an account or use our services.</li>
+                    <li><strong>Product Information:</strong> When you provide us with product details for tracking, we collect
+                        information about the products you are interested in, including their prices, availability, and historical
+                        data.</li>
+                    <li><strong>Usage Data:</strong> We automatically collect usage data, such as your IP address, browser type,
+                        device information, and interactions with our website, to improve our services and analyze user behavior.
+                    </li>
+                </ul>
+            
+                <h2>How We Use Your Information</h2>
+                <ul>
+                    <li><strong>Price Tracking:</strong> We use the information you provide to track product prices and notify you of
+                        price changes, stock availability, and special offers from online retailers like Amazon, Flipkart, and Myntra.
+                    </li>
+                    <li><strong>Communication:</strong> We may use your contact information to send you notifications, updates, and
+                        promotional offers related to our services. You can opt out of receiving these communications at any time.</li>
+                    <li><strong>Personalization:</strong> We use your preferences and usage data to personalize your experience and
+                        provide you with relevant recommendations and deals based on your interests.</li>
+                    <li><strong>Analytics:</strong> We analyze usage data to improve our website's performance, optimize user
+                        experience, and understand how our services are being used.</li>
+                </ul>
+                
+                <h2>Data Security</h2>
+                <ul>
+                    <li>We implement appropriate security measures to protect your personal information from unauthorized access,
+                        disclosure, alteration, or destruction.</li>
+                    <li>We use encryption, firewalls, and other industry-standard security technologies to safeguard your data during
+                        transmission and storage.</li>
+                </ul>
+                
+                <h2>Disclosure of Information</h2>
+                <ul>
+                    <li>We do not sell, trade, or rent your personal information to third parties for marketing purposes.</li>
+                    <li>We may share your information with trusted third-party service providers who assist us in operating our website,
+                        conducting business, or servicing you, as long as those parties agree to keep this information confidential.
+                    </li>
+                </ul>
+                
+                <h2>Affiliate Links and Commissions</h2>
+                <ul>
+                    <li>Some of the product links on our website may be affiliate links, which means we may earn a commission if you
+                        make a purchase through those links. However, this does not affect the price you pay for the product.</li>
+                    <li>We are committed to transparency and will always disclose when a link is an affiliate link.</li>
+                </ul>
+                
+                <h2>Your Choices and Rights</h2>
+                <ul>
+                    <li>You have the right to access, update, or delete your personal information at any time by logging into your
+                        account settings or contacting us directly.</li>
+                    <li>You can choose to opt out of receiving promotional communications from us by following the unsubscribe
+                        instructions included in the emails we send.</li>
+                </ul>
+                
+                <h2>Changes to This Privacy Policy</h2>
+                <ul>
+                    <li>We reserve the right to update or revise this Privacy Policy at any time. We will notify you of any changes by
+                        posting the new Privacy Policy on this page.</li>
+                    <li>Your continued use of our website after any changes to this Privacy Policy will constitute your acceptance of
+                        the changes.</li>
+                </ul>
+                </div>
+            
+                <h3>Contact Us</h3>
+                <p>If you have any questions, concerns, or feedback regarding this Privacy Policy or our privacy practices, please
+                    contact us at <a href="contact@support.pricetrackerweb.com">contact@support.pricetrackerweb.com</a>.</p>
+            
+                <p>Thank you for trusting pricetrackerweb.com. We are committed to protecting your privacy and providing you with a
+                    secure and enjoyable user experience.</p>
+            
+                <p>Last Updated: 17th Feb 2024</p>
+            </div>
+        </div>
+    </div>
+    {% include "includes/footer.html" %}
+    {% endblock content %}
+
+    <!-- Specific JS goes HERE -->
+    {% block javascripts %}
+
+    <script>
+    </script>
+
+    {% endblock javascripts %}

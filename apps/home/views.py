@@ -219,7 +219,7 @@ def stop_track(request):
 @csrf_exempt
 def contact_us(request):
     if request.method == 'POST':
-        
+
         try:
             email = request.POST.get('email', '')
             subject = request.POST.get('subject', '')
@@ -246,6 +246,9 @@ def contact_us(request):
 
 def about_us(request):
     return render(request, 'legal_pages/about_us.html')
+
+def privacy_policy(request):
+    return render(request, 'legal_pages/privacy_policy.html')
 
 @login_required(login_url="login")
 def pages(request):
