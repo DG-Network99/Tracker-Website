@@ -32,7 +32,8 @@
             <!-- Dropdown header -->
             <div class="px-3 py-3">
               <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">
-                  {% if notifications %}{{new_notification_count}}{% else %}0{% endif %} new</strong> notifications.</h6>
+                  {% if notifications %}{{new_notification_count}}{% else %}0{% endif %} new</strong> notifications.
+              </h6>
             </div>
             <!-- List group -->
             <div class="list-group list-group-flush">
@@ -47,8 +48,7 @@
                   <div class="col ml--2">
                     <div class="d-flex justify-content-between align-items-center">
                       <div>
-                        <h4
-                          class="mb-0 text-sm {% if prod.is_read %}text-muted{% else %}text-dark{% endif %}">
+                        <h4 class="mb-0 text-sm {% if prod.is_read %}text-muted{% else %}text-dark{% endif %}">
                           {{prod.product_detail.title|truncatechars:25}}</h4>
                       </div>
                       <div class="text-right text-muted">
@@ -59,7 +59,8 @@
                       {% if prod.change == 'increased' or prod.change == 'decreased' %}
                       <i
                         class="{% if prod.change == 'increased' %}text-warning fa fa-arrow-up{% else %}text-success fa fa-arrow-down{% endif %}"></i>
-                      <span class="status">Price has been <strong>{{prod.change}}</strong> by {{prod.percentage}}%</span>
+                      <span class="status">Price has been <strong>{{prod.change}}</strong> by
+                        {{prod.percentage}}%</span>
                       {% else %}
                       <span class="status">Product is currently <strong>'{{prod.change}}'</strong></span>
                       {% endif %}
@@ -82,7 +83,8 @@
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle bg-warning">
                 {% if user.is_authenticated %}
-                <span class="text-white font-weight-bold text-uppercase" style="font-size: 170%;">{{ request.user.username|first }}</span>
+                <span class="text-white font-weight-bold text-uppercase" style="font-size: 170%;">{{
+                  request.user.username|first }}</span>
                 {% else %}
                 <img alt="Image placeholder" src="/static/assets/img/theme/unknown-user.png">
                 {% endif %}
@@ -104,7 +106,7 @@
               <i class="ni ni-single-02"></i>
               <span>My profile</span>
             </a>
-            <a target="_blank" href="#" class="dropdown-item">
+            <a target="_blank" href="{% url 'contact_us' %}" class="dropdown-item">
               <i class="ni ni-support-16"></i>
               <span>Support</span>
             </a>
