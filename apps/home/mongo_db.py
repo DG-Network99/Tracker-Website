@@ -778,6 +778,48 @@ def get_all_notifications(user_email):
     notifications = notify_col.find_one({"user_email": user_email})
     all_records = []
 
+    def get_notified_time(notify_time):
+        notification_time = datetime.datetime.fromisoformat(notify_time)
+        
+        isoformat = datetime.datetime.now().isoformat()
+        current_time = datetime.datetime.fromisoformat(isoformat)
+
+        time_difference = current_time - notification_time
+
+        # Convert time difference to seconds
+        time_difference_seconds = time_difference.total_seconds()
+
+        # Define thresholds for time differences
+        minute = 60
+        hour = 60 * minute
+        day = 24 * hour
+
+        notified_time = None
+
+        # Format output based on time difference
+        if time_difference_seconds < minute:
+            notified_time = "Less than a minute ago"
+        elif time_difference_seconds < hour:
+            minutes_ago = int(time_difference_seconds / minute)
+            if minutes_ago ==1:
+                notified_time = f"{minutes_ago} minute ago"
+            else:
+                notified_time = f"{minutes_ago} minutes ago"
+        elif time_difference_seconds < day:
+            hours_ago = int(time_difference_seconds / hour)
+            if hours_ago ==1:
+                notified_time = f"{hours_ago} hour ago"
+            else:
+                notified_time = f"{hours_ago} hours ago"
+        else:
+            days_ago = int(time_difference_seconds / day)
+            if days_ago ==1:
+                notified_time = f"{days_ago} day ago"
+            else:
+                notified_time = f"{days_ago} days ago"
+
+        return notified_time
+
     if notifications != None:
         for prod in notifications['notifications']:
 
@@ -799,6 +841,7 @@ def get_all_notifications(user_email):
 
             product_info = prod
             product_info['product_detail'] = product_details
+            product_info['notified_time'] = get_notified_time(prod['current_date']) #notification sent time
             all_records.append(product_info)
     return all_records
 
