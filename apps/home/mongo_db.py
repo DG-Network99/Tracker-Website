@@ -214,10 +214,12 @@ async def manage_users(data, action):
             result = list(users.find(data))
             return result
         
+        # using projection to get necessary data <-using
         elif action =="projection_read":
             result = list(users.find(data['query'], projection = data.get('projection', {'_id':0})))
             return result
-
+        
+        # update primary field in user collection eg: gender, phone etc..,  <-using
         elif action == "update_primaries":
 
             result = users.update_one(
@@ -427,7 +429,9 @@ async def manage_notifications(data, action):
 def manage_productbase(data, action):
 
     try:
-
+        products = prod_col
+        
+        # action using
         if action == "create_product":
 
             query = {'link': data['link']}
@@ -440,10 +444,40 @@ def manage_productbase(data, action):
                 return True
             else:
                 return False
+     
+        elif action == "update_primaries":
+            result = products.update_one(
+                {
+                    "link": data["link"]},
+                {
+                    "$set": data["data"]
+                }, upsert=True)
             
-        if action == "read":
-            query = {''}
-            
+            # print(f"result in mongodb.py -> modified Count:{result.modified_count}, upserted id: {result.upserted_id}, acknowlged :{result.acknowledged}, match_count: {result.matched_count}")
+
+            if result.modified_count > 0 or result.upserted_id is not None:
+                return True
+            else:
+                return False
+        
+        elif action == "update_pricehistory":
+            result = products.update_one(
+                {
+                    "link": data["link"]},
+                {
+                    "$push": data["data"]
+                }, upsert=True)
+        
+        # action using (using when updating pricehistory)
+        elif action == "set_and_push":
+            result = products.update_one(
+                {
+                    "link": data["link"]},
+                {
+                    "$set": data["set_data"],
+                    "$push": data["push_data"]
+                }, upsert=True)
+
 
     except Exception as e:
 

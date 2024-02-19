@@ -13,12 +13,13 @@ import requests
 import json
 from urllib.parse import quote
 from .mongo_db import search_product, get_products, get_product_info, get_all_notifications, manage_users, manage_notifications, track_product, stop_tracking
-from .mongo_db import get_user_details, update_user_details
+from .mongo_db import manage_productbase, get_user_details, update_user_details
 from .utility import product_common_url
 import datetime
 import time
 from bson import ObjectId
 import csv
+import pytz
 
 # @login_required(login_url="/login/")
 @csrf_exempt
@@ -91,15 +92,36 @@ def main_dashboard(request):
 @csrf_exempt
 def notification_update(request):
     if request.method == "POST":
+
         post_data = json.loads(request.body.decode('utf-8'))
         print("Post data ", post_data)
         product_url = post_data.get('productUrl', None)
+
         if product_url:
+            #update current price, initPrice & Price History for the product
+            try:
+
+                indian_timezone = pytz.timezone('Asia/Kolkata')
+                
+                new_price_history_data = {'date': datetime.now(indian_timezone).strftime('%Y-%m-%d'), 'price': post_data["price"]}
+                
+                set_data = {"price": post_data["price"], "initPrice": post_data["previousPrice"]}
+                
+                push_data = {"priceHistory": new_price_history_data}
+
+                data = {"link": product_url, "set_data": set_data, "push_data": push_data}
+
+                update_product = manage_productbase(data, 'set_and_push')
+
+            except Exception as e:
+                print(e)
+
             res = asyncio.run(manage_users({
                 'query': {"products.product_link": product_url}, 
                 'projection': {'_id': 0, "user_email":1, "products.$": 1}}, 
                 'projection_read'))
             print("res is ", res)
+
             if res:
                 for user in res:
                     try:
