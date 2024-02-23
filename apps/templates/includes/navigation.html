@@ -1,3 +1,20 @@
+{% block stylesheets %}
+<style>
+  .notification-dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: -0.3rem;
+    right: -0.3rem;
+    font-size: 0.6rem;
+    display: grid;
+    place-items: center;
+  }
+</style>
+{% endblock stylesheets %}
+
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-prima border-bottom" style="background-color: rgb(0, 188, 154);
   background-color: rgb(1, 175, 187);
   background: rgb(48, 229, 242);
@@ -26,7 +43,9 @@
         </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-bell-55"></i>
+            <i class="ni ni-bell-55" style="position: relative;">
+              {% if notifications %}{% if new_notification_count %}<div class="notification-dot"><small>{{new_notification_count}}</small></div>{% endif %}{% endif %}
+            </i>
           </a>
           <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
             <!-- Dropdown header -->
@@ -42,7 +61,6 @@
                 class="list-group-item list-group-item-action">
                 <div class="row align-items-center">
                   <div class="col-auto">
-                    <!-- Avatar -->
                     <img alt="Image placeholder" src="{{prod.product_detail.image}}" class="avatar">
                   </div>
                   <div class="col ml--2">
